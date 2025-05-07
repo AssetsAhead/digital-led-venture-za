@@ -6,10 +6,10 @@ import { BadgePercent, DollarSign } from 'lucide-react';
 const HeroSection = () => {
   // Exchange rate calculation (ZAR to USD)
   const exchangeRate = 0.055; // Approximate ZAR to USD exchange rate
-  const priceZAR = 2304; // R2300 + R4
-  const originalPriceZAR = 2500;
+  const priceZAR = 2500; // Original price
+  const discountedPriceZAR = 2300; // Discounted price
   const priceUSD = Math.round(priceZAR * exchangeRate);
-  const originalPriceUSD = Math.round(originalPriceZAR * exchangeRate);
+  const discountedPriceUSD = Math.round(discountedPriceZAR * exchangeRate);
   
   return (
     <section className="relative overflow-hidden pt-24 pb-12">
@@ -23,7 +23,7 @@ const HeroSection = () => {
           <div className="flex flex-col space-y-4 lg:w-1/2">
             <div className="flex items-center gap-2">
               <BadgePercent className="h-5 w-5 text-led-pink animate-led-pulse" />
-              <span className="font-medium text-led-pink">Limited Time Offer - R196 OFF</span>
+              <span className="font-medium text-led-pink">Limited Time Offer - R200 OFF</span>
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight led-text">
@@ -38,14 +38,14 @@ const HeroSection = () => {
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <div className="space-y-2">
                 <p className="text-xl font-semibold">
-                  <span className="text-muted-foreground line-through mr-2">R{originalPriceZAR}</span>
-                  <span className="text-led-pink text-2xl">R{priceZAR}</span>
+                  <span className="text-muted-foreground line-through mr-2">R{priceZAR}</span>
+                  <span className="text-led-pink text-2xl">R{discountedPriceZAR}</span>
                 </p>
                 <div className="flex items-center gap-2">
                   <DollarSign className="h-4 w-4 text-muted-foreground" />
                   <p className="text-sm text-muted-foreground">
-                    <span className="line-through">${originalPriceUSD}</span> 
-                    <span className="ml-1 font-medium">${priceUSD} USD</span>
+                    <span className="line-through">${priceUSD}</span> 
+                    <span className="ml-1 font-medium">${discountedPriceUSD} USD</span>
                   </p>
                 </div>
                 <p className="text-sm text-muted-foreground">Free shipping on orders over R2000</p>

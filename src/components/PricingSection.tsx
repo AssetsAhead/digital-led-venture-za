@@ -3,15 +3,19 @@ import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { BadgePercent, ShoppingCart, DollarSign } from 'lucide-react';
+import { BadgePercent, ShoppingCart, DollarSign, Users } from 'lucide-react';
 
 const PricingSection = () => {
   // Exchange rate calculation (ZAR to USD)
   const exchangeRate = 0.055; // Approximate ZAR to USD exchange rate
-  const priceZAR = 2304; // R2300 + R4
-  const originalPriceZAR = 2500;
+  const priceZAR = 2300; // Discounted price
+  const originalPriceZAR = 2500; // Original price
   const priceUSD = Math.round(priceZAR * exchangeRate);
   const originalPriceUSD = Math.round(originalPriceZAR * exchangeRate);
+  
+  // Bulk order pricing
+  const bulkPriceZAR = priceZAR + 5 / exchangeRate; // Adding $5 per unit for bulk orders
+  const bulkPriceUSD = priceUSD + 5;
   
   return (
     <section id="pricing" className="py-16 relative">
@@ -30,14 +34,14 @@ const PricingSection = () => {
           </p>
         </div>
         
-        <Card className="max-w-3xl mx-auto border border-led-purple/50 bg-card/50 backdrop-blur-sm">
-          <CardContent className="p-8">
-            <div className="flex flex-col md:flex-row gap-8 items-center">
-              <div className="md:w-1/2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <Card className="border border-led-purple/50 bg-card/50 backdrop-blur-sm">
+            <CardContent className="p-8">
+              <div>
                 <Badge className="mb-4 bg-led-pink/20 text-led-pink border-led-pink/50">
-                  <BadgePercent className="h-3.5 w-3.5 mr-1" /> R196 OFF
+                  <BadgePercent className="h-3.5 w-3.5 mr-1" /> R200 OFF
                 </Badge>
-                <h3 className="text-2xl font-bold mb-2">Programmable LED Backpack</h3>
+                <h3 className="text-2xl font-bold mb-2">Individual Purchase</h3>
                 <ul className="space-y-2 mb-6">
                   <li className="flex items-center">
                     <span className="mr-2">✓</span> Full LED display panel
@@ -55,14 +59,12 @@ const PricingSection = () => {
                     <span className="mr-2">✓</span> 1 year warranty
                   </li>
                 </ul>
-              </div>
-              
-              <div className="md:w-1/2 text-center md:text-right">
+                
                 <div className="space-y-2 mb-6">
                   <p className="text-muted-foreground line-through">R{originalPriceZAR} (${originalPriceUSD})</p>
                   <div className="flex flex-col">
                     <p className="text-4xl font-bold text-led-pink">R{priceZAR}</p>
-                    <div className="flex items-center justify-end space-x-2 mt-1">
+                    <div className="flex items-center space-x-2 mt-1">
                       <DollarSign className="h-4 w-4 text-muted-foreground" />
                       <p className="text-lg text-muted-foreground">${priceUSD} USD</p>
                     </div>
@@ -74,14 +76,57 @@ const PricingSection = () => {
                   <ShoppingCart className="h-5 w-5 mr-2" />
                   Add to Cart
                 </Button>
-                
-                <p className="text-sm text-muted-foreground mt-4">
-                  Limited stock available. Ships within 3-5 business days.
-                </p>
               </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+          
+          <Card className="border border-led-blue/50 bg-card/50 backdrop-blur-sm">
+            <CardContent className="p-8">
+              <div>
+                <Badge className="mb-4 bg-led-blue/20 text-led-blue border-led-blue/50">
+                  <Users className="h-3.5 w-3.5 mr-1" /> SPECIAL BULK PRICING
+                </Badge>
+                <h3 className="text-2xl font-bold mb-2">Bulk Orders (10+)</h3>
+                <ul className="space-y-2 mb-6">
+                  <li className="flex items-center">
+                    <span className="mr-2">✓</span> All individual features included
+                  </li>
+                  <li className="flex items-center">
+                    <span className="mr-2">✓</span> Priority shipping
+                  </li>
+                  <li className="flex items-center">
+                    <span className="mr-2">✓</span> Dedicated account manager
+                  </li>
+                  <li className="flex items-center">
+                    <span className="mr-2">✓</span> Extended warranty options
+                  </li>
+                  <li className="flex items-center">
+                    <span className="mr-2">✓</span> Volume discount options available
+                  </li>
+                </ul>
+                
+                <div className="space-y-2 mb-6">
+                  <div className="flex flex-col">
+                    <p className="text-4xl font-bold text-led-blue">R{Math.round(bulkPriceZAR)}/unit</p>
+                    <div className="flex items-center space-x-2 mt-1">
+                      <DollarSign className="h-4 w-4 text-muted-foreground" />
+                      <p className="text-lg text-muted-foreground">${bulkPriceUSD}/unit USD</p>
+                    </div>
+                  </div>
+                  <p className="text-sm text-muted-foreground">Free delivery for bulk orders</p>
+                </div>
+                
+                <Button size="lg" variant="outline" className="w-full border-led-blue text-led-blue hover:bg-led-blue/10">
+                  Request Quote
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+        
+        <p className="text-center mt-8 text-sm text-muted-foreground max-w-2xl mx-auto">
+          Limited stock available. Ships within 3-5 business days. All prices include VAT. For bulk orders of 10+ units, please contact us for special pricing and customization options.
+        </p>
       </div>
     </section>
   );

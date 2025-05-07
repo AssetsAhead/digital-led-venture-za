@@ -76,18 +76,18 @@ const ContactSection = () => {
               <div className="space-y-4">
                 <div>
                   <h4 className="font-medium mb-1">Email</h4>
-                  <p className="text-muted-foreground">info@assetsahead.co.za</p>
+                  <p className="text-muted-foreground">assetsahead.sa@gmail.com</p>
                 </div>
                 
                 <div>
                   <h4 className="font-medium mb-1">Phone</h4>
-                  <p className="text-muted-foreground">+27 XX XXX XXXX</p>
+                  <p className="text-muted-foreground">+27 82 637 0673</p>
                 </div>
                 
                 <div>
                   <h4 className="font-medium mb-1">WhatsApp</h4>
                   <Button variant="outline" className="w-full border-led-blue text-led-blue hover:bg-led-blue/10" 
-                    onClick={() => window.open('https://wa.me/message/XXXXXXXX', '_blank')}>
+                    onClick={() => window.open('https://wa.me/27826370673', '_blank')}>
                     Chat with us on WhatsApp
                   </Button>
                 </div>
@@ -95,7 +95,7 @@ const ContactSection = () => {
                 <div className="pt-4">
                   <h4 className="font-medium mb-3">Follow us</h4>
                   <div className="flex gap-4 justify-center">
-                    <Button variant="ghost" size="icon" onClick={() => window.open('#', '_blank')}>
+                    <Button variant="ghost" size="icon" onClick={() => window.open('https://www.facebook.com/assetsahead', '_blank')}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -112,7 +112,7 @@ const ContactSection = () => {
                       </svg>
                       <span className="sr-only">Facebook</span>
                     </Button>
-                    <Button variant="ghost" size="icon" onClick={() => window.open('#', '_blank')}>
+                    <Button variant="ghost" size="icon" onClick={() => window.open('https://www.instagram.com/createcontent247', '_blank')}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
