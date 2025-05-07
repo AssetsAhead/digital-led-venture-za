@@ -40,8 +40,8 @@ const GallerySection = () => {
           
           <Card className="overflow-hidden border-0 rounded-lg neon-border">
             <img 
-              src="/lovable-uploads/b472317e-4866-4c04-88ee-54b8bb4ec1e4.png" 
-              alt="LED Backpack Storage" 
+              src="/lovable-uploads/0561b03c-7158-4ce3-8856-e7d2378696b6.png" 
+              alt="Premium Zipper Quality" 
               className="w-full h-auto object-cover aspect-square"
             />
           </Card>

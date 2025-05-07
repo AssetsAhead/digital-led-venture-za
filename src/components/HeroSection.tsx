@@ -50,16 +50,32 @@ const HeroSection = () => {
             </div>
           </div>
           
-          {/* Hero image */}
+          {/* Hero images */}
           <div className="lg:w-1/2 flex justify-center">
-            <div className="relative animate-float">
-              <img
-                src="/lovable-uploads/72778d36-88d3-4ab2-afb7-5c07ddc172c4.png"
-                alt="Programmable LED Backpack"
-                width={500}
-                height={500}
-                className="relative z-10 drop-shadow-2xl"
-              />
+            <div className="relative">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="animate-float">
+                  <img
+                    src="/lovable-uploads/72778d36-88d3-4ab2-afb7-5c07ddc172c4.png"
+                    alt="Programmable LED Backpack"
+                    className="relative z-10 drop-shadow-2xl rounded-lg"
+                  />
+                </div>
+                <div className="animate-float animation-delay-300">
+                  <img
+                    src="/lovable-uploads/15802f9c-f714-4046-bc73-8a4c6bf056d7.png"
+                    alt="LED Backpack with Display"
+                    className="relative z-10 drop-shadow-2xl rounded-lg"
+                  />
+                </div>
+                <div className="animate-float animation-delay-500 col-span-2">
+                  <img
+                    src="/lovable-uploads/95dfea97-ab5b-4fb2-adac-9be272dad97c.png"
+                    alt="LED Backpack with Mobile Control"
+                    className="relative z-10 drop-shadow-2xl rounded-lg"
+                  />
+                </div>
+              </div>
               <div className="absolute inset-0 bg-gradient-to-r from-led-purple/30 to-led-blue/30 rounded-full blur-3xl -z-10"></div>
             </div>
           </div>
