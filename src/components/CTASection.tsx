@@ -1,9 +1,14 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { BadgeDollarSign, ShoppingCart } from 'lucide-react';
+import { BadgeDollarSign, ShoppingCart, DollarSign } from 'lucide-react';
 
 const CTASection = () => {
+  // Exchange rate calculation (ZAR to USD)
+  const exchangeRate = 0.055; // Approximate ZAR to USD exchange rate
+  const priceZAR = 2304; // R2300 + R4
+  const priceUSD = Math.round(priceZAR * exchangeRate);
+  
   return (
     <section className="py-16 relative">
       <div className="absolute inset-0 bg-gradient-to-b from-background via-led-purple/10 to-background pointer-events-none"></div>
@@ -13,7 +18,7 @@ const CTASection = () => {
           <div className="inline-flex items-center justify-center p-1 mb-8 rounded-full bg-led-pink/20 text-led-pink border border-led-pink/30">
             <BadgeDollarSign className="h-5 w-5 mr-1" /> 
             <span className="px-3 py-1 text-sm font-medium">
-              Introductory Offer - R200 OFF Limited Time Only
+              Introductory Offer - R196 OFF Limited Time Only
             </span>
           </div>
           
@@ -28,7 +33,7 @@ const CTASection = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="bg-gradient-to-r from-led-purple to-led-blue hover:opacity-90 transition-opacity led-glow">
               <ShoppingCart className="h-5 w-5 mr-2" />
-              Buy Now - R2300
+              Buy Now - R{priceZAR} <span className="ml-1 text-sm opacity-80">(${priceUSD})</span>
             </Button>
             
             <Button size="lg" variant="outline" className="border-led-pink text-led-pink hover:bg-led-pink/10">
