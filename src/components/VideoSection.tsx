@@ -1,8 +1,34 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
 
 const VideoSection = () => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+
+  const togglePlay = () => {
+    const video = document.getElementById('demo-video') as HTMLVideoElement;
+    if (video) {
+      if (video.paused) {
+        video.play();
+        setIsPlaying(true);
+      } else {
+        video.pause();
+        setIsPlaying(false);
+      }
+    }
+  };
+
+  const toggleMute = () => {
+    const video = document.getElementById('demo-video') as HTMLVideoElement;
+    if (video) {
+      video.muted = !video.muted;
+      setIsMuted(!isMuted);
+    }
+  };
+
   return (
     <section id="video" className="py-16 relative">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(139,92,246,0.2),transparent_70%)]"></div>
@@ -21,16 +47,42 @@ const VideoSection = () => {
         </div>
         
         <div className="max-w-4xl mx-auto">
-          <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-lg shadow-2xl">
-            <iframe 
-              className="absolute top-0 left-0 w-full h-full"
-              src="https://www.youtube.com/embed/r0NOdgJImSk" 
-              title="LED Backpack Demo" 
-              frameBorder="0" 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-              allowFullScreen
-            ></iframe>
+          <div className="relative aspect-video overflow-hidden rounded-lg shadow-2xl bg-black">
+            <video 
+              id="demo-video"
+              className="w-full h-full object-cover"
+              poster="/lovable-uploads/72778d36-88d3-4ab2-afb7-5c07ddc172c4.png"
+              muted
+              playsInline
+            >
+              {/* Replace this with your uploaded video file */}
+              <source src="/path-to-your-video.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+            
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 flex items-center justify-between">
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="text-white hover:bg-white/20" 
+                onClick={togglePlay}
+                aria-label={isPlaying ? "Pause video" : "Play video"}
+              >
+                {isPlaying ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6" />}
+              </Button>
+              
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="text-white hover:bg-white/20" 
+                onClick={toggleMute}
+                aria-label={isMuted ? "Unmute video" : "Mute video"}
+              >
+                {isMuted ? <VolumeX className="h-6 w-6" /> : <Volume2 className="h-6 w-6" />}
+              </Button>
+            </div>
           </div>
+          
           <p className="text-center text-sm text-muted-foreground mt-4">
             The LED SPACE app allows you to create custom designs, text, and animations.
           </p>
