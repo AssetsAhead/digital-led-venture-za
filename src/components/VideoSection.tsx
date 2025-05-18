@@ -3,16 +3,25 @@ import React, { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
+import { useToast } from "@/hooks/use-toast";
 
 const VideoSection = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
+  const { toast } = useToast();
 
   const togglePlay = () => {
     const video = document.getElementById('demo-video') as HTMLVideoElement;
     if (video) {
       if (video.paused) {
-        video.play();
+        video.play().catch(error => {
+          toast({
+            title: "Video playback failed",
+            description: "The video couldn't be played. Please try again.",
+            variant: "destructive"
+          });
+          console.error("Video playback error:", error);
+        });
         setIsPlaying(true);
       } else {
         video.pause();
@@ -26,6 +35,13 @@ const VideoSection = () => {
     if (video) {
       video.muted = !video.muted;
       setIsMuted(!isMuted);
+      
+      if (!video.muted) {
+        toast({
+          title: "Sound enabled",
+          description: "Video sound has been turned on."
+        });
+      }
     }
   };
 
@@ -55,7 +71,8 @@ const VideoSection = () => {
               muted
               playsInline
             >
-              {/* Replace this with your uploaded video file */}
+              {/* After uploading your video, replace the src path below with your video's path */}
+              {/* Example: <source src="/lovable-uploads/your-video-filename.mp4" type="video/mp4" /> */}
               <source src="/path-to-your-video.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
