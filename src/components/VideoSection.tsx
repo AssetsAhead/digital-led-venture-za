@@ -70,10 +70,11 @@ const VideoSection = () => {
               poster="/lovable-uploads/72778d36-88d3-4ab2-afb7-5c07ddc172c4.png"
               muted
               playsInline
+              loop
             >
-              {/* After uploading your video, replace the src path below with your video's path */}
-              {/* Example: <source src="/lovable-uploads/your-video-filename.mp4" type="video/mp4" /> */}
-              <source src="/path-to-your-video.mp4" type="video/mp4" />
+              {/* For your CapCut/Pippit video named "LED Customizable Backpack_Dialogue_Pippit_202505180813" */}
+              {/* When you upload it, update this path with the generated URL */}
+              <source src="https://placehold.co/1920x1080.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
             
