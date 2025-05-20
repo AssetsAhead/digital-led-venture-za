@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -71,9 +72,8 @@ const VideoSection = () => {
               playsInline
               loop
             >
-              {/* For your CapCut/Pippit video named "LED Customizable Backpack_Dialogue_Pippit_202505180813" */}
-              {/* When you upload it, update this path with the generated URL */}
-              <source src="https://placehold.co/1920x1080.mp4" type="video/mp4" />
+              {/* Updated video source with the new URL */}
+              <source src="LED Customizable Backpack_Product highlights_Pippit_202505201124" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
             

@@ -47,6 +47,59 @@ const GallerySection = () => {
           </Card>
         </div>
         
+        <div className="mt-12">
+          <h3 className="text-2xl font-bold mb-8 text-center">Learn More</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <Card className="overflow-hidden border-0 rounded-lg neon-border">
+              <img 
+                src="/lovable-uploads/c2da4963-540f-4a28-8909-2da1606ea9ba.png" 
+                alt="High Quality Waterproof Motorcycle Backpack" 
+                className="w-full h-auto object-cover aspect-square"
+              />
+              <div className="p-4 bg-card/80 backdrop-blur-sm">
+                <h4 className="font-semibold">Waterproof Fabric</h4>
+                <p className="text-sm text-muted-foreground">96x128 pixel LED color screen higher definition</p>
+              </div>
+            </Card>
+            
+            <Card className="overflow-hidden border-0 rounded-lg neon-border">
+              <img 
+                src="/lovable-uploads/e3a5110c-6ee0-40b5-8380-3739717cea5c.png" 
+                alt="Bluetooth Connection APP Control" 
+                className="w-full h-auto object-cover aspect-square"
+              />
+              <div className="p-4 bg-card/80 backdrop-blur-sm">
+                <h4 className="font-semibold">App Control</h4>
+                <p className="text-sm text-muted-foreground">Bluetooth connection with USB interface to connect power bank</p>
+              </div>
+            </Card>
+            
+            <Card className="overflow-hidden border-0 rounded-lg neon-border">
+              <img 
+                src="/lovable-uploads/77242f7e-78a0-420d-94ea-64da1ff67ac3.png" 
+                alt="Comfortable & Functional Backpack" 
+                className="w-full h-auto object-cover aspect-square"
+              />
+              <div className="p-4 bg-card/80 backdrop-blur-sm">
+                <h4 className="font-semibold">Comfortable Design</h4>
+                <p className="text-sm text-muted-foreground">Adjustable shoulder straps with airflow design and hidden pockets</p>
+              </div>
+            </Card>
+            
+            <Card className="overflow-hidden border-0 rounded-lg neon-border">
+              <img 
+                src="/lovable-uploads/d3f22349-5d40-42c2-93e8-2fe41f20cbf7.png" 
+                alt="Multi Storage Compartment" 
+                className="w-full h-auto object-cover aspect-square"
+              />
+              <div className="p-4 bg-card/80 backdrop-blur-sm">
+                <h4 className="font-semibold">Storage Compartments</h4>
+                <p className="text-sm text-muted-foreground">Multiple storage options for your wallet, glasses, keys, phone and more</p>
+              </div>
+            </Card>
+          </div>
+        </div>
+        
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           <Card className="overflow-hidden border-0 rounded-lg neon-border">
             <img 
