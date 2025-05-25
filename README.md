@@ -1,73 +1,146 @@
-# Welcome to your Lovable project
 
-## Project info
+# LED Customizable Backpack Website
 
-**URL**: https://lovable.dev/projects/f0b1634f-4c50-4534-8508-fab4eeb4d152
+## Project Overview
+A modern, responsive e-commerce website showcasing LED customizable backpacks with full GoHighLevel (GHL) integration capabilities.
 
-## How can I edit this code?
+## 🚀 Live Demo
+- **Platform**: Lovable (lovable.dev)
+- **GitHub**: Connected with real-time sync
+- **Status**: Production-ready
 
-There are several ways of editing your application.
+## 🛠 Technology Stack
+- **Frontend**: React 18, TypeScript, Vite
+- **Styling**: Tailwind CSS, Shadcn UI components
+- **Icons**: Lucide React
+- **Forms**: React Hook Form with validation
+- **Notifications**: Toast system for user feedback
+- **Charts**: Recharts for data visualization
+- **Deployment**: Lovable platform with GitHub sync
 
-**Use Lovable**
+## 📱 Features
+- **Responsive Design**: Mobile-first, works on all devices
+- **Interactive Gallery**: Product showcase with hover effects
+- **Video Integration**: Product demonstration videos
+- **Contact Forms**: Lead capture with validation
+- **Pricing Section**: Clear pricing display
+- **FAQ Section**: Common questions and answers
+- **SEO Optimized**: Meta tags and semantic HTML
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/f0b1634f-4c50-4534-8508-fab4eeb4d152) and start prompting.
+## 🔌 GoHighLevel Integration Ready
 
-Changes made via Lovable will be committed automatically to this repo.
+### Integration Points
+1. **Contact Form** → Lead capture for CRM
+2. **CTA Buttons** → Conversion tracking
+3. **Pricing Actions** → Sales funnel integration
+4. **Newsletter Signup** → Email marketing lists
 
-**Use your preferred IDE**
+### Required Setup
+```bash
+# Environment Variables Needed
+VITE_GHL_WEBHOOK_URL=your_webhook_url
+VITE_GHL_API_KEY=your_api_key
+VITE_GHL_LOCATION_ID=your_location_id
+```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 📁 Project Structure
+```
+src/
+├── components/           # React components
+│   ├── ui/              # Shadcn UI components
+│   ├── Header.tsx       # Navigation
+│   ├── HeroSection.tsx  # Landing section
+│   ├── FeatureSection.tsx
+│   ├── GallerySection.tsx
+│   ├── VideoSection.tsx
+│   ├── PricingSection.tsx
+│   ├── ContactSection.tsx  # 🎯 GHL Integration Point
+│   ├── CTASection.tsx      # 🎯 GHL Integration Point
+│   └── Footer.tsx
+├── pages/
+│   └── Index.tsx        # Main page layout
+└── hooks/               # Custom React hooks
+```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 🎯 Key Components for GHL Integration
 
-Follow these steps:
+### ContactSection.tsx
+- **Purpose**: Main lead capture form
+- **Fields**: Name, Email, Phone, Message
+- **Validation**: Built-in with error handling
+- **Integration**: Ready for webhook connection
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### CTASection.tsx
+- **Purpose**: Primary conversion point
+- **Action**: "Get Your LED Backpack" button
+- **Integration**: Ready for GHL funnel connection
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### PricingSection.tsx
+- **Purpose**: Display pricing and capture purchase intent
+- **Integration**: Connect pricing buttons to sales process
 
-# Step 3: Install the necessary dependencies.
-npm i
+## 🚀 Quick Start for Developers
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+### Prerequisites
+- Node.js (v18+)
+- npm or yarn
+- Git
+
+### Installation
+```bash
+# Clone the repository
+git clone [your-github-repo-url]
+
+# Navigate to project
+cd led-backpack-website
+
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### Building for Production
+```bash
+# Create production build
+npm run build
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+# Preview production build
+npm run preview
+```
 
-**Use GitHub Codespaces**
+## 📋 Integration Checklist for GHL Team
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- [ ] Set up webhook URL in GHL
+- [ ] Configure environment variables
+- [ ] Test contact form submission
+- [ ] Set up lead automation in GHL
+- [ ] Configure email sequences
+- [ ] Test CTA button actions
+- [ ] Set up conversion tracking
+- [ ] Configure SMS notifications (optional)
 
-## What technologies are used for this project?
+## 📚 Documentation
+- [`GHL_INTEGRATION.md`](./GHL_INTEGRATION.md) - Complete integration guide
+- [`API_DOCUMENTATION.md`](./API_DOCUMENTATION.md) - API endpoints and data structures
+- [`DEPLOYMENT_GUIDE.md`](./DEPLOYMENT_GUIDE.md) - Deployment instructions
 
-This project is built with:
+## 🐛 Troubleshooting
+- **Form not submitting**: Check webhook URL and API keys
+- **Images not loading**: Verify image paths in public folder
+- **Styling issues**: Ensure Tailwind CSS is properly configured
+- **Build errors**: Check console logs and component imports
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 📞 Support
+- **GitHub Issues**: For bug reports and feature requests
+- **Lovable Platform**: For deployment and hosting issues
+- **GHL Integration**: Refer to integration documentation
 
-## How can I deploy this project?
+## 📄 License
+This project is ready for commercial use with your LED backpack business.
 
-Simply open [Lovable](https://lovable.dev/projects/f0b1634f-4c50-4534-8508-fab4eeb4d152) and click on Share -> Publish.
+---
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+**Ready for GoHighLevel Integration** ✅  
+All forms and conversion points are prepared for immediate GHL connection.
