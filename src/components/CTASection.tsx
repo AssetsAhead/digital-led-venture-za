@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { BadgeDollarSign, ShoppingCart, DollarSign } from 'lucide-react';
@@ -31,7 +30,11 @@ const CTASection = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-gradient-to-r from-led-purple to-led-blue hover:opacity-90 transition-opacity led-glow">
+            <Button 
+              size="lg" 
+              className="bg-gradient-to-r from-led-purple to-led-blue hover:opacity-90 transition-opacity led-glow"
+              onClick={() => window.location.href = '/order'}
+            >
               <ShoppingCart className="h-5 w-5 mr-2" />
               Buy Now - R{priceZAR} <span className="ml-1 text-sm opacity-80">(${priceUSD})</span>
             </Button>

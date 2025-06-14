@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -72,7 +71,11 @@ const PricingSection = () => {
                   <p className="text-sm text-led-pink font-medium">Free shipping included!</p>
                 </div>
                 
-                <Button size="lg" className="w-full bg-gradient-to-r from-led-purple to-led-blue hover:opacity-90 transition-opacity led-glow">
+                <Button 
+                  size="lg" 
+                  className="w-full bg-gradient-to-r from-led-purple to-led-blue hover:opacity-90 transition-opacity led-glow"
+                  onClick={() => window.location.href = '/order'}
+                >
                   <ShoppingCart className="h-5 w-5 mr-2" />
                   Add to Cart
                 </Button>

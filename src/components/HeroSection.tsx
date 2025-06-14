@@ -51,7 +51,10 @@ const HeroSection = () => {
                 <p className="text-sm text-led-pink font-medium">Free shipping included!</p>
               </div>
               
-              <Button className="bg-gradient-to-r from-led-purple to-led-blue hover:opacity-90 transition-opacity led-glow sm:ml-auto">
+              <Button 
+                className="bg-gradient-to-r from-led-purple to-led-blue hover:opacity-90 transition-opacity led-glow sm:ml-auto"
+                onClick={() => window.location.href = '/order'}
+              >
                 Buy Now - Limited Stock!
               </Button>
             </div>
