@@ -6,7 +6,7 @@ import { BadgePercent, DollarSign } from 'lucide-react';
 const HeroSection = () => {
   // Exchange rate calculation (ZAR to USD)
   const exchangeRate = 0.055; // Approximate ZAR to USD exchange rate
-  const priceZAR = 2200; // Updated discounted price
+  const priceZAR = 1900; // Updated price including shipping
   const originalPriceZAR = 2300; // Original price
   const priceUSD = Math.round(priceZAR * exchangeRate);
   const originalPriceUSD = Math.round(originalPriceZAR * exchangeRate);
@@ -23,7 +23,7 @@ const HeroSection = () => {
           <div className="flex flex-col space-y-4 lg:w-1/2">
             <div className="flex items-center gap-2">
               <BadgePercent className="h-5 w-5 text-led-pink animate-led-pulse" />
-              <span className="font-medium text-led-pink">All Time Low Price - R100 OFF</span>
+              <span className="font-medium text-led-pink">All Time Low Price - R400 OFF</span>
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight led-text">
@@ -48,7 +48,7 @@ const HeroSection = () => {
                     <span className="ml-1 font-medium">${priceUSD} USD</span>
                   </p>
                 </div>
-                <p className="text-sm text-muted-foreground">Free shipping on orders over R2000</p>
+                <p className="text-sm text-led-pink font-medium">Free shipping included!</p>
               </div>
               
               <Button className="bg-gradient-to-r from-led-purple to-led-blue hover:opacity-90 transition-opacity led-glow sm:ml-auto">

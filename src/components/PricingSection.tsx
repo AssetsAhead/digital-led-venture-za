@@ -8,13 +8,13 @@ import { BadgePercent, ShoppingCart, DollarSign, Users } from 'lucide-react';
 const PricingSection = () => {
   // Exchange rate calculation (ZAR to USD)
   const exchangeRate = 0.055; // Approximate ZAR to USD exchange rate
-  const priceZAR = 2200; // Updated discounted price
+  const priceZAR = 1900; // Updated price including shipping
   const originalPriceZAR = 2300; // Original price
   const priceUSD = Math.round(priceZAR * exchangeRate);
   const originalPriceUSD = Math.round(originalPriceZAR * exchangeRate);
   
   // Bulk order pricing
-  const bulkPriceZAR = 1900; // New bulk order price
+  const bulkPriceZAR = 1700; // Bulk order price
   const bulkPriceUSD = Math.round(bulkPriceZAR * exchangeRate);
   
   return (
@@ -30,7 +30,7 @@ const PricingSection = () => {
             Special Pricing
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Our prices have been reduced by R100 to an all time low. Don't miss this opportunity!
+            Our prices have been reduced by R400 to an all time low. Don't miss this opportunity!
           </p>
         </div>
         
@@ -39,7 +39,7 @@ const PricingSection = () => {
             <CardContent className="p-8">
               <div>
                 <Badge className="mb-4 bg-led-pink/20 text-led-pink border-led-pink/50">
-                  <BadgePercent className="h-3.5 w-3.5 mr-1" /> R100 OFF
+                  <BadgePercent className="h-3.5 w-3.5 mr-1" /> R400 OFF
                 </Badge>
                 <h3 className="text-2xl font-bold mb-2">Individual Purchase</h3>
                 <ul className="space-y-2 mb-6">
@@ -69,7 +69,7 @@ const PricingSection = () => {
                       <p className="text-lg text-muted-foreground">${priceUSD} USD</p>
                     </div>
                   </div>
-                  <p className="text-sm text-muted-foreground">+ R120 delivery anywhere in South Africa</p>
+                  <p className="text-sm text-led-pink font-medium">Free shipping included!</p>
                 </div>
                 
                 <Button size="lg" className="w-full bg-gradient-to-r from-led-purple to-led-blue hover:opacity-90 transition-opacity led-glow">
@@ -125,7 +125,7 @@ const PricingSection = () => {
         </div>
         
         <p className="text-center mt-8 text-sm text-muted-foreground max-w-2xl mx-auto">
-          Limited stock available. Ships within 3-5 business days. All prices include VAT. For bulk orders of 10+ units, please contact us for special pricing and customization options.
+          Limited stock available. Ships within 3-5 business days. All prices include VAT and shipping. For bulk orders of 10+ units, please contact us for special pricing and customization options.
         </p>
       </div>
     </section>
