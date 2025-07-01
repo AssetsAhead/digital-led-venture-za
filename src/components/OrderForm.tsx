@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -11,6 +11,7 @@ import { useToast } from '@/hooks/use-toast';
 const OrderForm = () => {
   const { toast } = useToast();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [yoco, setYoco] = useState<any>(null);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -28,6 +29,25 @@ const OrderForm = () => {
   const pricePerUnit = 1900;
   const totalAmount = pricePerUnit * formData.quantity;
 
+  useEffect(() => {
+    // Initialize Yoco SDK
+    const script = document.createElement('script');
+    script.src = 'https://js.yoco.com/sdk/v1/yoco-sdk-web.js';
+    script.onload = () => {
+      if (window.YocoSDK) {
+        const sdk = new window.YocoSDK({
+          publicKey: 'YOUR_YOCO_PUBLIC_KEY' // Replace with your Yoco public key
+        });
+        setYoco(sdk);
+      }
+    };
+    document.head.appendChild(script);
+
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -41,7 +61,7 @@ const OrderForm = () => {
     return required.every(field => formData[field].trim() !== '');
   };
 
-  const handlePayFastCheckout = async (e: React.FormEvent) => {
+  const handleYocoCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!validateForm()) {
@@ -53,64 +73,75 @@ const OrderForm = () => {
       return;
     }
 
+    if (!yoco) {
+      toast({
+        title: "Payment Error",
+        description: "Payment system is not ready. Please try again.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsProcessing(true);
 
     try {
-      // PayFast integration parameters
-      const payFastData = {
-        merchant_id: 'YOUR_MERCHANT_ID', // Replace with your PayFast merchant ID
-        merchant_key: 'YOUR_MERCHANT_KEY', // Replace with your PayFast merchant key
-        return_url: `${window.location.origin}/payment-success`,
-        cancel_url: `${window.location.origin}/payment-cancelled`,
-        notify_url: `${window.location.origin}/payment-notify`,
-        name_first: formData.firstName,
-        name_last: formData.lastName,
-        email_address: formData.email,
-        cell_number: formData.phone,
-        m_payment_id: `ORDER_${Date.now()}`,
-        amount: totalAmount.toFixed(2),
-        item_name: `LED Backpack x${formData.quantity}`,
-        item_description: `Programmable LED Backpack - Quantity: ${formData.quantity}`,
-        custom_str1: JSON.stringify({
-          address: formData.address,
-          city: formData.city,
-          province: formData.province,
-          postalCode: formData.postalCode,
-          specialInstructions: formData.specialInstructions
-        })
+      // Create Yoco checkout session
+      const checkoutOptions = {
+        amountInCents: totalAmount * 100, // Yoco expects amount in cents
+        currency: 'ZAR',
+        name: `${formData.firstName} ${formData.lastName}`,
+        description: `LED Backpack x${formData.quantity}`,
+        image: '', // Add your product image URL here
+        locale: 'auto',
+        metadata: {
+          orderId: `ORDER_${Date.now()}`,
+          customerInfo: JSON.stringify({
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+            phone: formData.phone,
+            address: formData.address,
+            city: formData.city,
+            province: formData.province,
+            postalCode: formData.postalCode,
+            specialInstructions: formData.specialInstructions
+          })
+        }
       };
 
-      // Create PayFast form and submit
-      const form = document.createElement('form');
-      form.method = 'POST';
-      form.action = 'https://www.payfast.co.za/eng/process'; // Use sandbox URL for testing: https://sandbox.payfast.co.za/eng/process
-      form.target = '_blank';
+      // Open Yoco checkout
+      yoco.showPopup(checkoutOptions);
 
-      Object.entries(payFastData).forEach(([key, value]) => {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = key;
-        input.value = value;
-        form.appendChild(input);
+      // Handle payment result
+      yoco.on('payment_complete', (result: any) => {
+        if (result.error) {
+          toast({
+            title: "Payment Failed",
+            description: result.error.message || "Payment could not be processed.",
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Payment Successful",
+            description: "Your order has been placed successfully!",
+          });
+          // Handle successful payment - you can redirect or show success message
+          console.log('Payment successful:', result);
+        }
+        setIsProcessing(false);
       });
 
-      document.body.appendChild(form);
-      form.submit();
-      document.body.removeChild(form);
-
-      toast({
-        title: "Redirecting to Payment",
-        description: "You will be redirected to PayFast to complete your payment.",
+      yoco.on('popup_closed', () => {
+        setIsProcessing(false);
       });
 
     } catch (error) {
-      console.error('PayFast checkout error:', error);
+      console.error('Yoco checkout error:', error);
       toast({
         title: "Payment Error",
         description: "There was an error processing your payment. Please try again.",
         variant: "destructive",
       });
-    } finally {
       setIsProcessing(false);
     }
   };
@@ -125,7 +156,7 @@ const OrderForm = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handlePayFastCheckout} className="space-y-6">
+          <form onSubmit={handleYocoCheckout} className="space-y-6">
             {/* Product Summary */}
             <div className="bg-muted/30 p-4 rounded-lg">
               <h3 className="font-semibold mb-2">Order Summary</h3>
@@ -264,14 +295,14 @@ const OrderForm = () => {
               type="submit"
               size="lg"
               className="w-full bg-gradient-to-r from-led-purple to-led-blue hover:opacity-90 transition-opacity led-glow"
-              disabled={isProcessing}
+              disabled={isProcessing || !yoco}
             >
               <CreditCard className="h-5 w-5 mr-2" />
-              {isProcessing ? 'Processing...' : `Pay R${totalAmount} with PayFast`}
+              {isProcessing ? 'Processing...' : `Pay R${totalAmount} with Yoco`}
             </Button>
 
             <p className="text-sm text-muted-foreground text-center">
-              You will be redirected to PayFast to complete your secure payment.
+              Secure payment processing powered by Yoco.
             </p>
           </form>
         </CardContent>
