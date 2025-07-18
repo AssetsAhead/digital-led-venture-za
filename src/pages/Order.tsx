@@ -16,7 +16,7 @@ const Order = () => {
             </h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Fill in your details below to order your programmable LED backpack. 
-              Payment is processed securely through PayFast.
+              Payment is processed securely through Yoco.
             </p>
           </div>
           <OrderForm />
