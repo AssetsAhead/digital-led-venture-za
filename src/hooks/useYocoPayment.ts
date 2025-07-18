@@ -22,7 +22,7 @@ export const useYocoPayment = () => {
   const [isProcessing, setIsProcessing] = useState(false);
 
   // Your actual Yoco public key
-  const YOCO_PUBLIC_KEY = 'your_actual_public_key_here';
+  const YOCO_PUBLIC_KEY = 'pk_live_a314c90fEPqmy4n30ed4';
 
   useEffect(() => {
     // Initialize Yoco SDK
