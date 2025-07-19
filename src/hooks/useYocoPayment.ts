@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 interface FormData {
   firstName: string;
@@ -103,7 +104,7 @@ export const useYocoPayment = () => {
       yoco.showPopup(checkoutOptions);
 
       // Handle payment result
-      yoco.on('payment_complete', (result: any) => {
+      yoco.on('payment_complete', async (result: any) => {
         console.log('Payment result:', result);
         if (result.error) {
           console.error('Payment error:', result.error);
@@ -114,6 +115,26 @@ export const useYocoPayment = () => {
           });
         } else {
           console.log('Payment successful:', result);
+          
+          // Send WhatsApp notification
+          try {
+            await supabase.functions.invoke('send-whatsapp-notification', {
+              body: {
+                customerName: `${formData.firstName} ${formData.lastName}`,
+                email: formData.email,
+                phone: formData.phone,
+                quantity: formData.quantity,
+                totalAmount: totalAmount,
+                address: formData.address,
+                city: formData.city,
+                province: formData.province,
+              }
+            });
+            console.log('WhatsApp notification sent');
+          } catch (error) {
+            console.error('Failed to send WhatsApp notification:', error);
+          }
+          
           toast({
             title: "Payment Successful!",
             description: "Your order has been placed successfully! You will receive a confirmation email shortly.",
