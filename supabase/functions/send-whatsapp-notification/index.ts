@@ -53,7 +53,7 @@ Order processed successfully! 🎉`;
     const twilioUrl = `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`;
     
     const formData = new URLSearchParams();
-    formData.append('From', whatsappFrom);
+    formData.append('From', 'whatsapp:+27678746540');
     formData.append('To', 'whatsapp:+27826370673');
     formData.append('Body', message);
 
