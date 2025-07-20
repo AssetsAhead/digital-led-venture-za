@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
 const GallerySection = () => {
@@ -134,6 +135,24 @@ const GallerySection = () => {
         <p className="text-center mt-12 text-lg text-muted-foreground max-w-2xl mx-auto">
           Easily change your display with the tap of a button. Create animations, display messages, or show off your favorite pixel art.
         </p>
+        
+        <div className="text-center mt-8">
+          <Button 
+            size="lg" 
+            variant="outline"
+            className="mr-4 border-led-pink text-led-pink hover:bg-led-pink/10"
+            onClick={() => window.location.href = '/quote'}
+          >
+            Get Bulk Quote
+          </Button>
+          <Button 
+            size="lg" 
+            className="bg-gradient-to-r from-led-purple to-led-blue hover:opacity-90 transition-opacity led-glow"
+            onClick={() => window.location.href = '/order'}
+          >
+            Buy Now!
+          </Button>
+        </div>
       </div>
     </section>
   );

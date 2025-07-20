@@ -119,7 +119,12 @@ const PricingSection = () => {
                   <p className="text-sm text-muted-foreground">Free delivery for bulk orders</p>
                 </div>
                 
-                <Button size="lg" variant="outline" className="w-full border-led-blue text-led-blue hover:bg-led-blue/10">
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="w-full border-led-blue text-led-blue hover:bg-led-blue/10"
+                  onClick={() => window.location.href = '/quote'}
+                >
                   Request Quote
                 </Button>
               </div>

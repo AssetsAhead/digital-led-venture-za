@@ -103,6 +103,16 @@ const VideoSection = () => {
           <p className="text-center text-sm text-muted-foreground mt-4">
             The LED SPACE app allows you to create custom designs, text, and animations.
           </p>
+          
+          <div className="text-center mt-8">
+            <Button 
+              size="lg" 
+              className="bg-gradient-to-r from-led-purple to-led-blue hover:opacity-90 transition-opacity led-glow"
+              onClick={() => window.location.href = '/order'}
+            >
+              Order Yours Today!
+            </Button>
+          </div>
         </div>
       </div>
     </section>

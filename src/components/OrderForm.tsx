@@ -27,8 +27,11 @@ const OrderForm = () => {
   });
 
   // Pricing
-  const pricePerUnit = 1900;
+  const basePrice = 1900;
+  const bulkDiscountPrice = 1700; // 10% discount for 10+ units
+  const pricePerUnit = formData.quantity >= 10 ? bulkDiscountPrice : basePrice;
   const totalAmount = pricePerUnit * formData.quantity;
+  const savings = formData.quantity >= 10 ? (basePrice - bulkDiscountPrice) * formData.quantity : 0;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -100,6 +103,8 @@ const OrderForm = () => {
               pricePerUnit={pricePerUnit}
               totalAmount={totalAmount}
               onQuantityChange={handleInputChange}
+              savings={savings}
+              isBulkOrder={formData.quantity >= 10}
             />
 
             {/* Customer Information */}

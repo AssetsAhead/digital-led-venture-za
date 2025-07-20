@@ -39,8 +39,13 @@ const CTASection = () => {
               Buy Now - R{priceZAR} <span className="ml-1 text-sm opacity-80">(${priceUSD})</span>
             </Button>
             
-            <Button size="lg" variant="outline" className="border-led-pink text-led-pink hover:bg-led-pink/10">
-              Learn More
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="border-led-pink text-led-pink hover:bg-led-pink/10"
+              onClick={() => window.location.href = '/quote'}
+            >
+              Get Bulk Quote
             </Button>
           </div>
           

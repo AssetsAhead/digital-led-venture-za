@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
 const features = [
@@ -78,6 +79,16 @@ const FeatureSection = () => {
               </CardContent>
             </Card>
           ))}
+        </div>
+        
+        <div className="text-center mt-12">
+          <Button 
+            size="lg" 
+            className="bg-gradient-to-r from-led-purple to-led-blue hover:opacity-90 transition-opacity led-glow"
+            onClick={() => window.location.href = '/order'}
+          >
+            Order Now - Limited Stock!
+          </Button>
         </div>
       </div>
     </section>
