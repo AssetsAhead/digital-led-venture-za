@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LED Backpack CTA Section</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: hsl(240, 10%, 3.9%);
+            color: hsl(0, 0%, 98%);
+            line-height: 1.6;
+        }
+        
+        .cta-section {
+            padding: 64px 0;
+            position: relative;
+        }
+        
+        .gradient-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, 
+                hsl(240, 10%, 3.9%) 0%, 
+                rgba(139, 92, 246, 0.1) 50%, 
+                hsl(240, 10%, 3.9%) 100%);
+            pointer-events: none;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+        }
+        
+        .cta-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .offer-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px;
+            background: rgba(236, 72, 153, 0.2);
+            border: 1px solid rgba(236, 72, 153, 0.3);
+            border-radius: 50px;
+            color: #EC4899;
+            margin-bottom: 32px;
+        }
+        
+        .offer-content {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+        }
+        
+        .dollar-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+        }
+        
+        .main-title {
+            font-size: 60px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            text-shadow: 
+                0 0 5px #8B5CF6,
+                0 0 10px #0FA0CE,
+                0 0 15px #3B82F6,
+                0 0 20px #EC4899;
+            font-family: 'Orbitron', monospace;
+        }
+        
+        .subtitle {
+            font-size: 20px;
+            color: hsl(240, 5%, 65%);
+            margin-bottom: 32px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+        
+        .primary-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 32px;
+            background: linear-gradient(to right, #8B5CF6, #0FA0CE);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            box-shadow: 
+                0 0 5px #8B5CF6,
+                0 0 10px #0FA0CE,
+                0 0 15px #3B82F6;
+        }
+        
+        .primary-btn:hover {
+            opacity: 0.9;
+        }
+        
+        .cart-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+        }
+        
+        .secondary-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 32px;
+            background: transparent;
+            color: #EC4899;
+            border: 1px solid #EC4899;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .secondary-btn:hover {
+            background: rgba(236, 72, 153, 0.1);
+        }
+        
+        .footer-text {
+            font-size: 14px;
+            color: hsl(240, 5%, 65%);
+        }
+        
+        /* Mobile responsive */
+        @media (min-width: 640px) {
+            .button-group {
+                flex-direction: row;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 36px;
+            }
+            
+            .subtitle {
+                font-size: 18px;
+            }
+            
+            .container {
+                padding: 0 16px;
+            }
+            
+            .primary-btn,
+            .secondary-btn {
+                font-size: 16px;
+                padding: 14px 24px;
+            }
+        }
+        
+        /* Lead capture form (hidden by default, shown when needed) */
+        .lead-form {
+            display: none;
+            max-width: 400px;
+            margin: 32px auto 0;
+            padding: 24px;
+            background: rgba(240, 10%, 3.9%, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            backdrop-filter: blur(12px);
+        }
+        
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: hsl(240, 5%, 20%);
+            border: 1px solid hsl(240, 5%, 25%);
+            border-radius: 6px;
+            color: hsl(0, 0%, 98%);
+            font-size: 16px;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #8B5CF6;
+        }
+        
+        .form-submit {
+            width: 100%;
+            padding: 12px 24px;
+            background: #8B5CF6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <section class="cta-section">
+        <div class="gradient-bg"></div>
+        
+        <div class="container">
+            <div class="cta-content">
+                <div class="offer-badge">
+                    <div class="offer-content">
+                        <svg class="dollar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                        <span>Introductory Offer - R400 OFF Limited Time Only</span>
+                    </div>
+                </div>
+                
+                <h1 class="main-title">Be The First To Make A Statement</h1>
+                
+                <p class="subtitle">
+                    Don't miss out on the most innovative backpack to hit the South African market. 
+                    Express yourself with limitless customization.
+                </p>
+                
+                <div class="button-group">
+                    <a href="YOUR_ORDER_PAGE_URL" class="primary-btn" onclick="trackPurchaseIntent()">
+                        <svg class="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="8" cy="21" r="1"></circle>
+                            <circle cx="19" cy="21" r="1"></circle>
+                            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57L23 6H6"></path>
+                        </svg>
+                        Buy Now - R1900 <span style="margin-left: 4px; font-size: 14px; opacity: 0.8;">($105)</span>
+                    </a>
+                    
+                    <a href="YOUR_QUOTE_PAGE_URL" class="secondary-btn" onclick="trackQuoteRequest()">
+                        Get Bulk Quote
+                    </a>
+                </div>
+                
+                <p class="footer-text">Free shipping included! Limited stock available.</p>
+                
+                <!-- Lead Capture Form (Optional - can be shown with JavaScript) -->
+                <form id="leadForm" class="lead-form" action="YOUR_GHL_WEBHOOK_URL" method="POST">
+                    <h3 style="margin-bottom: 16px; text-align: center;">Get Exclusive Updates</h3>
+                    
+                    <div class="form-group">
+                        <input type="email" name="email" class="form-input" placeholder="Enter your email" required>
+                    </div>
+                    
+                    <!-- Hidden fields for GHL -->
+                    <input type="hidden" name="source" value="CTA Button">
+                    <input type="hidden" name="product_interest" value="LED Backpack">
+                    <input type="hidden" name="page_url" id="pageUrl">
+                    <input type="hidden" name="timestamp" id="timestamp">
+                    
+                    <button type="submit" class="form-submit">Get Updates</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Set hidden fields
+        document.getElementById('pageUrl').value = window.location.href;
+        document.getElementById('timestamp').value = new Date().toISOString();
+        
+        // Track purchase intent for GHL
+        function trackPurchaseIntent() {
+            // Send purchase intent to GHL
+            fetch('YOUR_GHL_WEBHOOK_URL', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: 'purchase_intent',
+                    product: 'LED Backpack',
+                    price: 'R1900',
+                    source: 'CTA Section',
+                    timestamp: new Date().toISOString(),
+                    page_url: window.location.href
+                })
+            }).catch(console.error);
+        }
+        
+        // Track quote request for GHL
+        function trackQuoteRequest() {
+            // Send quote request to GHL
+            fetch('YOUR_GHL_WEBHOOK_URL', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: 'quote_request',
+                    product: 'LED Backpack Bulk',
+                    source: 'CTA Section',
+                    timestamp: new Date().toISOString(),
+                    page_url: window.location.href
+                })
+            }).catch(console.error);
+        }
+        
+        // Optional: Show lead form instead of redirecting
+        function showLeadForm() {
+            document.getElementById('leadForm').style.display = 'block';
+        }
+        
+        // Lead form submission
+        document.getElementById('leadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            fetch('YOUR_GHL_WEBHOOK_URL', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Thank you! We\'ll keep you updated on our LED backpack launch.');
+                    this.reset();
+                    this.style.display = 'none';
+                }
+            })
+            .catch(console.error);
+        });
+    </script>
+</body>
+</html>

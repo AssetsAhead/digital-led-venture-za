@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LED Backpack Pricing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: hsl(240, 10%, 3.9%);
+            color: hsl(0, 0%, 98%);
+            line-height: 1.6;
+        }
+        
+        .pricing-section {
+            padding: 64px 0;
+            position: relative;
+        }
+        
+        .gradient-bg {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.2), transparent 70%);
+            pointer-events: none;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: rgba(240, 10%, 3.9%, 0.5);
+            border: 1px solid #8B5CF6;
+            color: #8B5CF6;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+        
+        .led-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-shadow: 
+                0 0 5px #8B5CF6,
+                0 0 10px #0FA0CE,
+                0 0 15px #3B82F6,
+                0 0 20px #EC4899;
+        }
+        
+        .subtitle {
+            font-size: 18px;
+            color: hsl(240, 5%, 65%);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .pricing-card {
+            background: rgba(240, 10%, 3.9%, 0.5);
+            backdrop-filter: blur(12px);
+            border-radius: 12px;
+            padding: 32px;
+            position: relative;
+        }
+        
+        .individual-card {
+            border: 1px solid rgba(139, 92, 246, 0.5);
+        }
+        
+        .bulk-card {
+            border: 1px solid rgba(15, 160, 206, 0.5);
+        }
+        
+        .discount-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+        
+        .pink-badge {
+            background: rgba(236, 72, 153, 0.2);
+            color: #EC4899;
+            border: 1px solid rgba(236, 72, 153, 0.5);
+        }
+        
+        .blue-badge {
+            background: rgba(15, 160, 206, 0.2);
+            color: #0FA0CE;
+            border: 1px solid rgba(15, 160, 206, 0.5);
+        }
+        
+        .percent-icon {
+            width: 14px;
+            height: 14px;
+            margin-right: 4px;
+        }
+        
+        .users-icon {
+            width: 14px;
+            height: 14px;
+            margin-right: 4px;
+        }
+        
+        .card-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        
+        .features-list {
+            list-style: none;
+            margin-bottom: 24px;
+        }
+        
+        .features-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .checkmark {
+            color: #22c55e;
+            margin-right: 12px;
+            font-weight: bold;
+        }
+        
+        .pricing-info {
+            margin-bottom: 24px;
+        }
+        
+        .original-price {
+            color: hsl(240, 5%, 65%);
+            text-decoration: line-through;
+            margin-bottom: 8px;
+        }
+        
+        .current-price {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .price-zar {
+            font-size: 48px;
+            font-weight: 700;
+            color: #EC4899;
+        }
+        
+        .price-usd-row {
+            display: flex;
+            align-items: center;
+            margin-top: 8px;
+        }
+        
+        .dollar-icon {
+            width: 16px;
+            height: 16px;
+            color: hsl(240, 5%, 65%);
+            margin-right: 8px;
+        }
+        
+        .price-usd {
+            font-size: 18px;
+            color: hsl(240, 5%, 65%);
+        }
+        
+        .bulk-price-zar {
+            font-size: 48px;
+            font-weight: 700;
+            color: #0FA0CE;
+        }
+        
+        .shipping-info {
+            font-size: 14px;
+            color: #EC4899;
+            font-weight: 500;
+        }
+        
+        .bulk-shipping-info {
+            font-size: 14px;
+            color: hsl(240, 5%, 65%);
+        }
+        
+        .pricing-btn {
+            width: 100%;
+            padding: 16px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+        
+        .primary-btn {
+            background: linear-gradient(to right, #8B5CF6, #0FA0CE);
+            color: white;
+            box-shadow: 
+                0 0 5px #8B5CF6,
+                0 0 10px #0FA0CE,
+                0 0 15px #3B82F6;
+        }
+        
+        .primary-btn:hover {
+            opacity: 0.9;
+        }
+        
+        .secondary-btn {
+            background: transparent;
+            color: #0FA0CE;
+            border: 1px solid #0FA0CE;
+        }
+        
+        .secondary-btn:hover {
+            background: rgba(15, 160, 206, 0.1);
+        }
+        
+        .cart-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+        }
+        
+        .footer-text {
+            text-align: center;
+            margin-top: 32px;
+            font-size: 14px;
+            color: hsl(240, 5%, 65%);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            
+            .led-title {
+                font-size: 32px;
+            }
+            
+            .container {
+                padding: 0 16px;
+            }
+            
+            .pricing-card {
+                padding: 24px;
+            }
+            
+            .price-zar,
+            .bulk-price-zar {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="pricing-section">
+        <div class="gradient-bg"></div>
+        
+        <div class="container">
+            <div class="section-header">
+                <div class="badge">ALL TIME LOW PRICE</div>
+                <h2 class="led-title">Special Pricing</h2>
+                <p class="subtitle">
+                    Our prices have been reduced by R400 to an all time low. Don't miss this opportunity!
+                </p>
+            </div>
+            
+            <div class="pricing-grid">
+                <!-- Individual Purchase Card -->
+                <div class="pricing-card individual-card">
+                    <div class="discount-badge pink-badge">
+                        <svg class="percent-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="9" y1="9" x2="15" y2="15"></line>
+                            <circle cx="6.5" cy="6.5" r="2.5"></circle>
+                            <circle cx="17.5" cy="17.5" r="2.5"></circle>
+                        </svg>
+                        R400 OFF
+                    </div>
+                    
+                    <h3 class="card-title">Individual Purchase</h3>
+                    
+                    <ul class="features-list">
+                        <li><span class="checkmark">✓</span> Full LED display panel</li>
+                        <li><span class="checkmark">✓</span> Smartphone app control</li>
+                        <li><span class="checkmark">✓</span> Water resistant construction</li>
+                        <li><span class="checkmark">✓</span> 16" laptop compartment</li>
+                        <li><span class="checkmark">✓</span> 1 year warranty</li>
+                    </ul>
+                    
+                    <div class="pricing-info">
+                        <p class="original-price">R2300 ($127)</p>
+                        <div class="current-price">
+                            <p class="price-zar">R1900</p>
+                            <div class="price-usd-row">
+                                <svg class="dollar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="12" y1="1" x2="12" y2="23"></line>
+                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                </svg>
+                                <p class="price-usd">$105 USD</p>
+                            </div>
+                        </div>
+                        <p class="shipping-info">Free shipping included!</p>
+                    </div>
+                    
+                    <a href="YOUR_ORDER_PAGE_URL" class="pricing-btn primary-btn" onclick="trackIndividualPurchase()">
+                        <svg class="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="8" cy="21" r="1"></circle>
+                            <circle cx="19" cy="21" r="1"></circle>
+                            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57L23 6H6"></path>
+                        </svg>
+                        Add to Cart
+                    </a>
+                </div>
+                
+                <!-- Bulk Orders Card -->
+                <div class="pricing-card bulk-card">
+                    <div class="discount-badge blue-badge">
+                        <svg class="users-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        BULK DISCOUNT
+                    </div>
+                    
+                    <h3 class="card-title">Bulk Orders (10+)</h3>
+                    
+                    <ul class="features-list">
+                        <li><span class="checkmark">✓</span> All individual features included</li>
+                        <li><span class="checkmark">✓</span> Priority shipping</li>
+                        <li><span class="checkmark">✓</span> Dedicated account manager</li>
+                        <li><span class="checkmark">✓</span> Extended warranty options</li>
+                        <li><span class="checkmark">✓</span> Volume discount options available</li>
+                    </ul>
+                    
+                    <div class="pricing-info">
+                        <div class="current-price">
+                            <p class="bulk-price-zar">R1700/unit</p>
+                            <div class="price-usd-row">
+                                <svg class="dollar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="12" y1="1" x2="12" y2="23"></line>
+                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                </svg>
+                                <p class="price-usd">$94/unit USD</p>
+                            </div>
+                        </div>
+                        <p class="bulk-shipping-info">Free delivery for bulk orders</p>
+                    </div>
+                    
+                    <a href="YOUR_QUOTE_PAGE_URL" class="pricing-btn secondary-btn" onclick="trackBulkQuote()">
+                        Request Quote
+                    </a>
+                </div>
+            </div>
+            
+            <p class="footer-text">
+                Limited stock available. Ships within 3-5 business days. All prices include VAT and shipping. 
+                For bulk orders of 10+ units, please contact us for special pricing and customization options.
+            </p>
+        </div>
+    </section>
+
+    <script>
+        // Track individual purchase for GHL
+        function trackIndividualPurchase() {
+            fetch('YOUR_GHL_WEBHOOK_URL', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: 'individual_purchase_intent',
+                    product: 'LED Backpack Individual',
+                    price: 'R1900',
+                    quantity: 1,
+                    source: 'Pricing Section',
+                    timestamp: new Date().toISOString(),
+                    page_url: window.location.href
+                })
+            }).catch(console.error);
+        }
+        
+        // Track bulk quote request for GHL
+        function trackBulkQuote() {
+            fetch('YOUR_GHL_WEBHOOK_URL', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: 'bulk_quote_request',
+                    product: 'LED Backpack Bulk',
+                    price: 'R1700/unit',
+                    minimum_quantity: 10,
+                    source: 'Pricing Section',
+                    timestamp: new Date().toISOString(),
+                    page_url: window.location.href
+                })
+            }).catch(console.error);
+        }
+    </script>
+</body>
+</html>
