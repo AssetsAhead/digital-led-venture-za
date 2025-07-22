@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Order from "./pages/Order";
 import Quote from "./pages/Quote";
 import ReturnPolicy from "./pages/ReturnPolicy";
+import TermsOfService from "./pages/TermsOfService";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/order" element={<Order />} />
           <Route path="/quote" element={<Quote />} />
           <Route path="/return-policy" element={<ReturnPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
