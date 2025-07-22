@@ -53,7 +53,7 @@ const Footer = () => {
             <h4 className="font-semibold mb-4">Legal</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-muted-foreground hover:text-led-purple transition-colors">
+                <a href="https://www.privacypolicies.com/live/6f38d2ad-a9e4-4442-a370-f0c362b8d41a" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-led-purple transition-colors">
                   Privacy Policy
                 </a>
               </li>
