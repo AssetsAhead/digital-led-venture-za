@@ -45,7 +45,7 @@ const ProductSummary = ({ quantity, pricePerUnit, totalAmount, onQuantityChange,
             min="1"
             value={quantity}
             onChange={onQuantityChange}
-            className="w-20 text-center"
+            className="w-20 text-center bg-white border-2 border-input"
           />
           {quantity >= 10 && (
             <p className="text-sm text-led-blue mt-1">10% bulk discount applied!</p>

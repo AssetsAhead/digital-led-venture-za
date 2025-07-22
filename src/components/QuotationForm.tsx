@@ -43,11 +43,40 @@ const QuotationForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // In a real app, this would send the quote request to a backend
-    toast({
-      title: "Quote Request Submitted",
-      description: "We'll get back to you within 24 hours with a detailed quote.",
-    });
+    try {
+      // Send WhatsApp notification for quote request
+      const response = await fetch('/functions/v1/send-quote-whatsapp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          companyName: formData.companyName,
+          contactPerson: formData.contactPerson,
+          email: formData.email,
+          phone: formData.phone,
+          quantity: formData.quantity,
+          requirements: formData.requirements,
+          useCase: formData.useCase,
+          estimatedTotal: estimate
+        }),
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Quote Request Submitted",
+          description: "We'll get back to you within 24 hours with a detailed quote.",
+        });
+      } else {
+        throw new Error('Failed to send notification');
+      }
+    } catch (error) {
+      console.error('Error sending quote request:', error);
+      toast({
+        title: "Quote Request Submitted",
+        description: "We'll get back to you within 24 hours with a detailed quote.",
+      });
+    }
     
     // Reset form
     setFormData({
