@@ -116,8 +116,12 @@ export const useYocoPayment = () => {
         } else {
           console.log('Payment successful:', result);
           
-          // Send WhatsApp notification
+          // Generate order ID for this transaction
+          const orderId = `LED${Date.now().toString().slice(-6)}`;
+          
+          // Send WhatsApp notifications (business and customer)
           try {
+            // Send business notification
             await supabase.functions.invoke('send-whatsapp-notification', {
               body: {
                 customerName: `${formData.firstName} ${formData.lastName}`,
@@ -128,16 +132,34 @@ export const useYocoPayment = () => {
                 address: formData.address,
                 city: formData.city,
                 province: formData.province,
+                orderId: orderId,
               }
             });
-            console.log('WhatsApp notification sent');
+            
+            // Send customer confirmation
+            await supabase.functions.invoke('send-customer-confirmation', {
+              body: {
+                customerName: `${formData.firstName} ${formData.lastName}`,
+                email: formData.email,
+                phone: formData.phone,
+                quantity: formData.quantity,
+                totalAmount: totalAmount,
+                address: formData.address,
+                city: formData.city,
+                province: formData.province,
+                orderId: orderId,
+              }
+            });
+            
+            console.log('WhatsApp notifications sent to business and customer');
           } catch (error) {
-            console.error('Failed to send WhatsApp notification:', error);
+            console.error('Failed to send WhatsApp notifications:', error);
+            // Don't fail the order if WhatsApp fails
           }
           
           toast({
             title: "Payment Successful!",
-            description: "Your order has been placed successfully! You will receive a confirmation email shortly.",
+            description: `Order ${orderId} confirmed! Check your WhatsApp for order details.`,
           });
           onSuccess();
         }
