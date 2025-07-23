@@ -28,8 +28,8 @@ const OrderForm = () => {
 
   // Pricing
   const [testMode, setTestMode] = useState(false);
-  const basePrice = testMode ? 1 : 1900; // R1.00 for testing, R19.00 for production
-  const bulkDiscountPrice = testMode ? 1 : 1700; // Same test price for bulk
+  const basePrice = testMode ? 5 : 1900; // R5.00 for testing, R19.00 for production
+  const bulkDiscountPrice = testMode ? 5 : 1700; // Same test price for bulk
   const pricePerUnit = formData.quantity >= 10 ? bulkDiscountPrice : basePrice;
   const totalAmount = pricePerUnit * formData.quantity;
   const savings = formData.quantity >= 10 ? (basePrice - bulkDiscountPrice) * formData.quantity : 0;
@@ -103,7 +103,7 @@ const OrderForm = () => {
               <div>
                 <span className="text-sm font-medium">Test Mode</span>
                 <p className="text-xs text-foreground/70">
-                  Enable to test with minimum amount (R1.00)
+                  Enable to test with minimum amount (R5.00)
                 </p>
               </div>
               <Button
