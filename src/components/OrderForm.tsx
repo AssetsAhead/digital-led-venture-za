@@ -27,8 +27,9 @@ const OrderForm = () => {
   });
 
   // Pricing
-  const basePrice = 1900;
-  const bulkDiscountPrice = 1700; // 10% discount for 10+ units
+  const [testMode, setTestMode] = useState(false);
+  const basePrice = testMode ? 100 : 1900; // R1.00 for testing, R19.00 for production
+  const bulkDiscountPrice = testMode ? 100 : 1700; // Same test price for bulk
   const pricePerUnit = formData.quantity >= 10 ? bulkDiscountPrice : basePrice;
   const totalAmount = pricePerUnit * formData.quantity;
   const savings = formData.quantity >= 10 ? (basePrice - bulkDiscountPrice) * formData.quantity : 0;
@@ -93,6 +94,26 @@ const OrderForm = () => {
               <span className="text-sm">
                 Payment System: {sdkLoaded ? 'Ready' : 'Loading...'}
               </span>
+            </div>
+          </div>
+
+          {/* Test Mode Toggle */}
+          <div className="mb-4 p-3 rounded-lg bg-yellow-50 border border-yellow-200">
+            <div className="flex items-center justify-between">
+              <div>
+                <span className="text-sm font-medium">Test Mode</span>
+                <p className="text-xs text-muted-foreground">
+                  Enable to test with minimum amount (R1.00)
+                </p>
+              </div>
+              <Button
+                type="button"
+                variant={testMode ? "default" : "outline"}
+                size="sm"
+                onClick={() => setTestMode(!testMode)}
+              >
+                {testMode ? 'ON' : 'OFF'}
+              </Button>
             </div>
           </div>
 
