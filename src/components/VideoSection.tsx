@@ -73,7 +73,7 @@ const VideoSection = () => {
               loop
             >
               {/* Updated video source with the new URL */}
-              <source src="LED Customizable Backpack_Product highlights_Pippit_202505201124" type="video/mp4" />
+              <source src="/LED_Backpack_Demo.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
             
