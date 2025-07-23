@@ -28,8 +28,8 @@ const OrderForm = () => {
 
   // Pricing
   const [testMode, setTestMode] = useState(false);
-  const basePrice = testMode ? 100 : 1900; // R1.00 for testing, R19.00 for production
-  const bulkDiscountPrice = testMode ? 100 : 1700; // Same test price for bulk
+  const basePrice = testMode ? 1 : 1900; // R1.00 for testing, R19.00 for production
+  const bulkDiscountPrice = testMode ? 1 : 1700; // Same test price for bulk
   const pricePerUnit = formData.quantity >= 10 ? bulkDiscountPrice : basePrice;
   const totalAmount = pricePerUnit * formData.quantity;
   const savings = formData.quantity >= 10 ? (basePrice - bulkDiscountPrice) * formData.quantity : 0;
@@ -102,7 +102,7 @@ const OrderForm = () => {
             <div className="flex items-center justify-between">
               <div>
                 <span className="text-sm font-medium">Test Mode</span>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-foreground/70">
                   Enable to test with minimum amount (R1.00)
                 </p>
               </div>
@@ -161,7 +161,7 @@ const OrderForm = () => {
               {isProcessing ? 'Processing...' : `Pay R${totalAmount} with Yoco`}
             </Button>
 
-            <p className="text-sm text-muted-foreground text-center">
+            <p className="text-sm text-foreground/80 text-center">
               Secure payment processing powered by Yoco.
             </p>
           </form>
