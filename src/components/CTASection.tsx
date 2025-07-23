@@ -25,7 +25,7 @@ const CTASection = () => {
             Be The First To Make A Statement
           </h2>
           
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
             Don't miss out on the most innovative backpack to hit the South African market. Express yourself with limitless customization.
           </p>
           
@@ -49,7 +49,7 @@ const CTASection = () => {
             </Button>
           </div>
           
-          <p className="mt-6 text-sm text-muted-foreground">
+          <p className="mt-6 text-sm text-white/80">
             Free shipping included! Limited stock available.
           </p>
         </div>

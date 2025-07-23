@@ -31,19 +31,19 @@ const HeroSection = () => {
               LED Backpack
             </h1>
             
-            <p className="text-lg md:text-xl text-muted-foreground max-w-[600px]">
+            <p className="text-lg md:text-xl text-white/90 max-w-[600px]">
               Stand out with South Africa's most advanced customizable backpack. Express yourself with animated LED displays you control from your phone.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <div className="space-y-2">
                 <p className="text-xl font-semibold">
-                  <span className="text-muted-foreground line-through mr-2">R{originalPriceZAR}</span>
+                  <span className="text-white/60 line-through mr-2">R{originalPriceZAR}</span>
                   <span className="text-led-pink text-2xl">R{priceZAR}</span>
                 </p>
                 <div className="flex items-center gap-2">
-                  <DollarSign className="h-4 w-4 text-muted-foreground" />
-                  <p className="text-sm text-muted-foreground">
+                  <DollarSign className="h-4 w-4 text-white/70" />
+                  <p className="text-sm text-white/80">
                     <span className="line-through">${originalPriceUSD}</span> 
                     <span className="ml-1 font-medium">${priceUSD} USD</span>
                   </p>

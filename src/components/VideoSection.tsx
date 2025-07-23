@@ -57,7 +57,7 @@ const VideoSection = () => {
           <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tight led-text">
             See It In Action
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p className="text-white/90 text-lg max-w-2xl mx-auto">
             Watch how the programmable LED backpack works and how you can customize it.
           </p>
         </div>
@@ -100,7 +100,7 @@ const VideoSection = () => {
             </div>
           </div>
           
-          <p className="text-center text-sm text-muted-foreground mt-4">
+          <p className="text-center text-sm text-white/80 mt-4">
             The LED SPACE app allows you to create custom designs, text, and animations.
           </p>
           
