@@ -16,11 +16,11 @@ const Header = () => {
         </div>
 
         <nav className="hidden md:flex gap-6 items-center">
-          <a href="#features" className="text-sm font-medium hover:text-led-purple transition-colors">
-            Features
+          <a href="#services" className="text-sm font-medium hover:text-led-purple transition-colors">
+            Services
           </a>
           <a href="#gallery" className="text-sm font-medium hover:text-led-purple transition-colors">
-            Gallery
+            Portfolio
           </a>
           <a href="#faq" className="text-sm font-medium hover:text-led-purple transition-colors">
             FAQ
@@ -32,14 +32,8 @@ const Header = () => {
 
         <div className="flex items-center gap-4">
           <Badge variant="outline" className="hidden md:block border-led-pink bg-background/50 text-led-pink">
-            Special Launch Offer
+            Innovation Partners
           </Badge>
-          <Button size="sm" variant="ghost" className="relative">
-            <ShoppingCart className="h-5 w-5" />
-            <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-led-pink text-[10px] text-white">
-              0
-            </span>
-          </Button>
         </div>
       </div>
     </header>
