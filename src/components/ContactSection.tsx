@@ -1,21 +1,79 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 const ContactSection = () => {
   const { toast } = useToast();
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    message: '',
+    zapierWebhookUrl: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Message sent!",
-      description: "We'll get back to you as soon as possible.",
-    });
+    
+    if (!formData.firstName || !formData.lastName || !formData.email) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill in all required fields.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await supabase.functions.invoke('process-lead', {
+        body: formData
+      });
+
+      if (response.error) {
+        throw response.error;
+      }
+
+      toast({
+        title: "Success! 🎉",
+        description: "Thank you for your interest! Our team will contact you within 24 hours. Check your email for a welcome message.",
+      });
+
+      // Reset form
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        message: '',
+        zapierWebhookUrl: ''
+      });
+
+    } catch (error) {
+      console.error('Form submission error:', error);
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again or contact us directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -41,29 +99,95 @@ const ContactSection = () => {
               <h3 className="text-xl font-bold mb-4">Send us a message</h3>
               
               <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium mb-1">
-                    Name
-                  </label>
-                  <Input id="name" placeholder="Your name" className="bg-input" required />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="firstName">First Name *</Label>
+                    <Input
+                      id="firstName"
+                      name="firstName"
+                      placeholder="First name"
+                      className="bg-input"
+                      value={formData.firstName}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="lastName">Last Name *</Label>
+                    <Input
+                      id="lastName"
+                      name="lastName"
+                      placeholder="Last name"
+                      className="bg-input"
+                      value={formData.lastName}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
                 </div>
                 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium mb-1">
-                    Email
-                  </label>
-                  <Input id="email" type="email" placeholder="Your email" className="bg-input" required />
+                  <Label htmlFor="email">Email Address *</Label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="your@email.com"
+                    className="bg-input"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                  />
                 </div>
                 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium mb-1">
-                    Message
-                  </label>
-                  <Textarea id="message" placeholder="How can we help?" className="bg-input" rows={4} required />
+                  <Label htmlFor="phone">Phone Number</Label>
+                  <Input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    placeholder="+27 123 456 789"
+                    className="bg-input"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                  />
                 </div>
                 
-                <Button type="submit" className="w-full bg-led-purple hover:bg-led-purple/90">
-                  Send Message
+                <div>
+                  <Label htmlFor="message">Message</Label>
+                  <Textarea
+                    id="message"
+                    name="message"
+                    placeholder="Tell us about your business needs and goals..."
+                    className="bg-input"
+                    rows={4}
+                    value={formData.message}
+                    onChange={handleInputChange}
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="zapierWebhookUrl">Zapier Webhook URL (Optional)</Label>
+                  <Input
+                    id="zapierWebhookUrl"
+                    name="zapierWebhookUrl"
+                    type="url"
+                    placeholder="https://hooks.zapier.com/hooks/catch/..."
+                    className="bg-input"
+                    value={formData.zapierWebhookUrl}
+                    onChange={handleInputChange}
+                  />
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Connect your Zapier automation to receive lead notifications
+                  </p>
+                </div>
+                
+                <Button 
+                  type="submit" 
+                  className="w-full bg-led-purple hover:bg-led-purple/90"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Sending..." : "Send Message & Start My Growth Journey"}
                 </Button>
               </form>
             </CardContent>
