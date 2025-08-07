@@ -116,51 +116,53 @@ export const useYocoPayment = () => {
         } else {
           console.log('Payment successful:', result);
           
-          // Generate order ID for this transaction
-          const orderId = `LED${Date.now().toString().slice(-6)}`;
-          
-          // Send WhatsApp notifications (business and customer)
+          // Process the lead and order through the integrated system
           try {
-            // Send business notification
-            await supabase.functions.invoke('send-whatsapp-notification', {
+            const response = await supabase.functions.invoke('process-lead', {
               body: {
-                customerName: `${formData.firstName} ${formData.lastName}`,
+                firstName: formData.firstName,
+                lastName: formData.lastName,
                 email: formData.email,
                 phone: formData.phone,
-                quantity: formData.quantity,
-                totalAmount: totalAmount,
-                address: formData.address,
-                city: formData.city,
-                province: formData.province,
-                orderId: orderId,
+                message: `Purchase completed: LED Backpack x${formData.quantity}`,
+                leadType: 'purchase',
+                source: 'order_form',
+                orderData: {
+                  packageType: 'led_backpack',
+                  quantity: formData.quantity,
+                  amount: totalAmount,
+                  currency: 'ZAR',
+                  deliveryAddress: `${formData.address}, ${formData.city}, ${formData.province}, ${formData.postalCode}`,
+                  specialInstructions: formData.specialInstructions,
+                  paymentReference: result.id || `YOC_${Date.now()}`,
+                  status: 'paid'
+                }
               }
             });
+
+            if (response.error) {
+              console.error('Error processing lead:', response.error);
+              throw new Error('Failed to process order');
+            }
+
+            const { leadId, orderId } = response.data;
+            console.log('Order processed successfully:', { leadId, orderId });
             
-            // Send customer confirmation
-            await supabase.functions.invoke('send-customer-confirmation', {
-              body: {
-                customerName: `${formData.firstName} ${formData.lastName}`,
-                email: formData.email,
-                phone: formData.phone,
-                quantity: formData.quantity,
-                totalAmount: totalAmount,
-                address: formData.address,
-                city: formData.city,
-                province: formData.province,
-                orderId: orderId,
-              }
+            toast({
+              title: "Order Confirmed!",
+              description: `Order ${orderId} has been received and confirmed. You'll receive updates via email and WhatsApp.`,
             });
             
-            console.log('WhatsApp notifications sent to business and customer');
           } catch (error) {
-            console.error('Failed to send WhatsApp notifications:', error);
-            // Don't fail the order if WhatsApp fails
+            console.error('Failed to process order:', error);
+            // Still show success but log the error
+            toast({
+              title: "Payment Successful!",
+              description: "Your payment was processed successfully. If you don't receive confirmation shortly, please contact support.",
+              variant: "default",
+            });
           }
           
-          toast({
-            title: "Payment Successful!",
-            description: `Order ${orderId} confirmed! Check your WhatsApp for order details.`,
-          });
           onSuccess();
         }
         setIsProcessing(false);
