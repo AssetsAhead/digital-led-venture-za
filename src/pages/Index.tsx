@@ -24,6 +24,7 @@ const Index = () => {
         <LEDProductsSection />
         <GallerySection />
         <VideoSection />
+        <PricingSection />
         <FAQSection />
         <CTASection />
         <ContactSection />
