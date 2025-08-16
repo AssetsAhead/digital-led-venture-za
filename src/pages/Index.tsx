@@ -3,6 +3,7 @@ import React from 'react';
 import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
 import FeatureSection from '@/components/FeatureSection';
+import BusinessLeadGenSection from '@/components/BusinessLeadGenSection';
 import LEDProductsSection from '@/components/LEDProductsSection';
 import GallerySection from '@/components/GallerySection';
 import VideoSection from '@/components/VideoSection';
@@ -19,6 +20,7 @@ const Index = () => {
       <main>
         <HeroSection />
         <FeatureSection />
+        <BusinessLeadGenSection />
         <LEDProductsSection />
         <GallerySection />
         <VideoSection />
