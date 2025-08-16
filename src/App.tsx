@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Order from "./pages/Order";
 import Quote from "./pages/Quote";
+import Presentation from "./pages/Presentation";
 import ReturnPolicy from "./pages/ReturnPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import NotFound from "./pages/NotFound";
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/order" element={<Order />} />
           <Route path="/quote" element={<Quote />} />
+          <Route path="/presentation" element={<Presentation />} />
           <Route path="/return-policy" element={<ReturnPolicy />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

@@ -42,7 +42,7 @@ const HeroSection = () => {
                 size="lg"
                 variant="outline"
                 className="border-led-pink/50 text-led-pink hover:bg-led-pink/10"
-                onClick={() => window.location.href = '#portfolio'}
+                onClick={() => window.location.href = '/presentation'}
               >
                 Explore Our Portfolio
               </Button>
