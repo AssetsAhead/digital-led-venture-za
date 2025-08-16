@@ -51,19 +51,37 @@ const FeatureSection = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service, index) => (
-            <Card key={index} className="bg-card/50 backdrop-blur-sm border border-border hover:border-led-purple transition-colors group">
-              <CardContent className="p-6">
-                <div className="text-4xl mb-4">{service.icon}</div>
-                <h3 className="text-xl font-semibold mb-2 group-hover:text-led-purple transition-colors">
-                  {service.title}
-                </h3>
-                <p className="text-muted-foreground">
-                  {service.description}
-                </p>
-              </CardContent>
-            </Card>
-          ))}
+          {services.map((service, index) => {
+            const handleClick = () => {
+              if (service.title === "Diva Stemcells") {
+                window.open('https://divabyfay.com', '_blank');
+              } else if (service.title === "Web Creation & Digital Marketing") {
+                window.location.href = '/GHL-website-launchpad';
+              }
+            };
+
+            const isClickable = service.title === "Diva Stemcells" || service.title === "Web Creation & Digital Marketing";
+            
+            return (
+              <Card 
+                key={index} 
+                className={`bg-card/50 backdrop-blur-sm border border-border hover:border-led-purple transition-colors group ${
+                  isClickable ? 'cursor-pointer' : ''
+                }`}
+                onClick={isClickable ? handleClick : undefined}
+              >
+                <CardContent className="p-6">
+                  <div className="text-4xl mb-4">{service.icon}</div>
+                  <h3 className="text-xl font-semibold mb-2 group-hover:text-led-purple transition-colors">
+                    {service.title}
+                  </h3>
+                  <p className="text-muted-foreground">
+                    {service.description}
+                  </p>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
         
         <div className="text-center mt-12">
