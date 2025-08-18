@@ -54,7 +54,7 @@ Respond within 24 hours! 💼`;
     
     const formData = new URLSearchParams();
     formData.append('From', 'whatsapp:+27678746540');
-    formData.append('To', 'whatsapp:+27826370673');
+    formData.append('To', 'whatsapp:+27678746540');
     formData.append('Body', message);
 
     const response = await fetch(twilioUrl, {

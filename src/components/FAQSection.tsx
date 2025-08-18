@@ -78,11 +78,11 @@ const FAQSection = () => {
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
               assetsahead.sa@gmail.com
             </a>
-            <a href="tel:+27826370673" className="text-led-blue hover:underline flex items-center">
+            <a href="tel:+27678746540" className="text-led-blue hover:underline flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-              +27 82 637 0673
+              +27 67 874 6540
             </a>
-            <a href="https://wa.me/+27826370673" target="_blank" rel="noopener noreferrer" className="text-led-blue hover:underline flex items-center">
+            <a href="https://wa.me/+27678746540" target="_blank" rel="noopener noreferrer" className="text-led-blue hover:underline flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 20.9l1.8-6.7c-.5-1-1-2-1-3.3a9 9 0 1 1 17.8 2 9 9 0 0 1-13.5 7.7l-5.1.3z"/><path d="M10.8 14.4c2.7 2 4.8 1.6 5.8 1 1.8-1 1.9-3.2 1-4.4-1-1-1.8-1.7-3-1-1 .6-1 1.2-1 2 0 .2 2.5 1.2 2 3.3-.4 1.8-3.6.5-4.8-.9z"/></svg>
               WhatsApp
             </a>

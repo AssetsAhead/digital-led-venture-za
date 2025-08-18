@@ -205,13 +205,13 @@ const ContactSection = () => {
                 
                 <div>
                   <h4 className="font-medium mb-1">Phone</h4>
-                  <p className="text-muted-foreground">+27 82 637 0673</p>
+                  <p className="text-muted-foreground">+27 67 874 6540</p>
                 </div>
                 
                 <div>
                   <h4 className="font-medium mb-1">WhatsApp</h4>
                   <Button variant="outline" className="w-full border-led-blue text-led-blue hover:bg-led-blue/10" 
-                    onClick={() => window.open('https://wa.me/27826370673', '_blank')}>
+                    onClick={() => window.open('https://wa.me/27678746540', '_blank')}>
                     Chat with us on WhatsApp
                   </Button>
                 </div>
