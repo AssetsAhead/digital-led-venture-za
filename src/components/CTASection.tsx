@@ -5,7 +5,7 @@ import { BadgeDollarSign, ShoppingCart, DollarSign } from 'lucide-react';
 const CTASection = () => {
   // Exchange rate calculation (ZAR to USD)
   const exchangeRate = 0.055; // Approximate ZAR to USD exchange rate
-  const priceZAR = 1900; // Updated price including shipping
+  const priceZAR = 2520; // Updated price including shipping (R2400 + R120 shipping)
   const priceUSD = Math.round(priceZAR * exchangeRate);
   
   return (
@@ -17,7 +17,7 @@ const CTASection = () => {
           <div className="inline-flex items-center justify-center p-1 mb-8 rounded-full bg-led-pink/20 text-led-pink border border-led-pink/30">
             <BadgeDollarSign className="h-5 w-5 mr-1" /> 
             <span className="px-3 py-1 text-sm font-medium">
-              Introductory Offer - R400 OFF Limited Time Only
+              Introductory Offer - R300 OFF Limited Time Only
             </span>
           </div>
           

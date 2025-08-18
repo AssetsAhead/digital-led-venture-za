@@ -7,13 +7,13 @@ import { BadgePercent, ShoppingCart, DollarSign, Users } from 'lucide-react';
 const PricingSection = () => {
   // Exchange rate calculation (ZAR to USD)
   const exchangeRate = 0.055; // Approximate ZAR to USD exchange rate
-  const priceZAR = 1900; // Updated price including shipping
-  const originalPriceZAR = 2300; // Original price
+  const priceZAR = 2520; // Updated price including shipping (R2400 + R120 shipping)
+  const originalPriceZAR = 2700; // Original price
   const priceUSD = Math.round(priceZAR * exchangeRate);
   const originalPriceUSD = Math.round(originalPriceZAR * exchangeRate);
   
   // Bulk order pricing
-  const bulkPriceZAR = 1700; // Bulk order price
+  const bulkPriceZAR = 2200; // Bulk order price (R2400 - R200 bulk discount)
   const bulkPriceUSD = Math.round(bulkPriceZAR * exchangeRate);
   
   return (
@@ -29,7 +29,7 @@ const PricingSection = () => {
             Special Pricing
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Our prices have been reduced by R400 to an all time low. Don't miss this opportunity!
+            Our prices have been reduced by R300 to an all time low. Don't miss this opportunity!
           </p>
         </div>
         
@@ -38,7 +38,7 @@ const PricingSection = () => {
             <CardContent className="p-8">
               <div>
                 <Badge className="mb-4 bg-led-pink/20 text-led-pink border-led-pink/50">
-                  <BadgePercent className="h-3.5 w-3.5 mr-1" /> R400 OFF
+                  <BadgePercent className="h-3.5 w-3.5 mr-1" /> R300 OFF
                 </Badge>
                 <h3 className="text-2xl font-bold mb-2">Individual Purchase</h3>
                 <ul className="space-y-2 mb-6">

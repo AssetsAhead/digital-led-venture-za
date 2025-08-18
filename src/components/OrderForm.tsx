@@ -28,8 +28,8 @@ const OrderForm = () => {
 
   // Pricing
   const [testMode, setTestMode] = useState(false);
-  const basePrice = testMode ? 5 : 1900; // R5.00 for testing, R19.00 for production
-  const bulkDiscountPrice = testMode ? 5 : 1700; // Same test price for bulk
+  const basePrice = testMode ? 5 : 2520; // R5.00 for testing, R2520 for production (R2400 + R120 shipping)
+  const bulkDiscountPrice = testMode ? 5 : 2200; // Same test price for bulk (R2400 - R200 bulk discount)
   const pricePerUnit = formData.quantity >= 10 ? bulkDiscountPrice : basePrice;
   const totalAmount = pricePerUnit * formData.quantity;
   const savings = formData.quantity >= 10 ? (basePrice - bulkDiscountPrice) * formData.quantity : 0;

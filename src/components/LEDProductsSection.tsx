@@ -7,8 +7,8 @@ import { DollarSign, BadgePercent } from 'lucide-react';
 const LEDProductsSection = () => {
   // Exchange rate calculation (ZAR to USD)
   const exchangeRate = 0.055; // Approximate ZAR to USD exchange rate
-  const priceZAR = 1900; // Updated price including shipping
-  const originalPriceZAR = 2300; // Original price
+  const priceZAR = 2520; // Updated price including shipping (R2400 + R120 shipping)
+  const originalPriceZAR = 2700; // Original price
   const priceUSD = Math.round(priceZAR * exchangeRate);
   const originalPriceUSD = Math.round(originalPriceZAR * exchangeRate);
 
@@ -66,7 +66,7 @@ const LEDProductsSection = () => {
               <CardContent className="p-6">
                 <div className="flex items-center gap-2 mb-4">
                   <BadgePercent className="h-5 w-5 text-led-pink animate-led-pulse" />
-                  <span className="font-medium text-led-pink">Special Launch Offer - R400 OFF</span>
+                  <span className="font-medium text-led-pink">Special Launch Offer - R300 OFF</span>
                 </div>
                 
                 <h3 className="text-2xl md:text-3xl font-display font-bold tracking-tight led-text mb-4">
