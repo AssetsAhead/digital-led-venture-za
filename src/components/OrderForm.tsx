@@ -87,36 +87,6 @@ const OrderForm = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {/* SDK Status Indicator */}
-          <div className="mb-4 p-3 rounded-lg bg-muted/30">
-            <div className="flex items-center gap-2">
-              <div className={`w-2 h-2 rounded-full ${sdkLoaded ? 'bg-green-500' : 'bg-yellow-500'}`}></div>
-              <span className="text-sm">
-                Payment System: {sdkLoaded ? 'Ready' : 'Loading...'}
-              </span>
-            </div>
-          </div>
-
-          {/* Test Mode Toggle */}
-          <div className="mb-4 p-3 rounded-lg bg-yellow-50 border border-yellow-200">
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="text-sm font-medium">Test Mode</span>
-                <p className="text-xs text-foreground/70">
-                  Enable to test with minimum amount (R5.00)
-                </p>
-              </div>
-              <Button
-                type="button"
-                variant={testMode ? "default" : "outline"}
-                size="sm"
-                onClick={() => setTestMode(!testMode)}
-              >
-                {testMode ? 'ON' : 'OFF'}
-              </Button>
-            </div>
-          </div>
-
           <form onSubmit={handleYocoCheckout} className="space-y-6">
             {/* Product Summary */}
             <ProductSummary
