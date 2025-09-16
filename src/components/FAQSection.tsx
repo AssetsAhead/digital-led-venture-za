@@ -54,13 +54,13 @@ const FAQSection = () => {
         </div>
         
         <div className="max-w-3xl mx-auto">
-          <Accordion type="single" collapsible className="w-full">
+          <Accordion type="single" collapsible className="w-full space-y-2">
             {faqs.map((faq, index) => (
-              <AccordionItem key={index} value={`item-${index}`}>
-                <AccordionTrigger className="text-left hover:text-led-purple transition-colors">
+              <AccordionItem key={index} value={`item-${index}`} className="border border-border/50 rounded-lg bg-card/50 backdrop-blur-sm">
+                <AccordionTrigger className="text-left hover:text-led-purple transition-colors px-6 py-4">
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
+                <AccordionContent className="text-muted-foreground px-6 pb-4 bg-card/80 backdrop-blur-sm relative z-10">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>
