@@ -20,8 +20,9 @@ export const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({ reportWe
       setTimeout(() => {
         const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
         if (navigation) {
-          handleMetric('DOM Content Loaded', navigation.domContentLoadedEventEnd - navigation.navigationStart);
-          handleMetric('Load Complete', navigation.loadEventEnd - navigation.navigationStart);
+          const start = navigation.fetchStart || 0;
+          handleMetric('DOM Content Loaded', navigation.domContentLoadedEventEnd - start);
+          handleMetric('Load Complete', navigation.loadEventEnd - start);
         }
       }, 1000);
     }
@@ -43,8 +44,9 @@ export const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({ reportWe
       const fidObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries();
         entries.forEach((entry) => {
-          if (process.env.NODE_ENV === 'development') {
-            console.log('FID:', entry.processingStart - entry.startTime);
+          const fidEntry = entry as any; // FID entries have processingStart
+          if (process.env.NODE_ENV === 'development' && fidEntry.processingStart) {
+            console.log('FID:', fidEntry.processingStart - entry.startTime);
           }
         });
       });
