@@ -60,12 +60,9 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
     };
   }, [priority, isInView]);
 
-  // Generate WebP source URLs
+  // Use original source only since we don't have WebP versions
   const generateSources = (originalSrc: string) => {
-    // Convert to WebP if supported
-    const webpSrc = originalSrc.replace(/\.(jpg|jpeg|png)$/i, '.webp');
     return {
-      webp: webpSrc,
       original: originalSrc,
     };
   };
@@ -99,26 +96,23 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
 
       {/* Image */}
       {(isInView || priority) && (
-        <picture>
-          <source srcSet={sources.webp} type="image/webp" />
-          <img
-            src={sources.original}
-            alt={alt}
-            width={width}
-            height={height}
-            loading={priority ? 'eager' : 'lazy'}
-            decoding="async"
-            className={cn(
-              "transition-opacity duration-300",
-              isLoaded ? "opacity-100" : "opacity-0",
-              hasError && "hidden",
-              className
-            )}
-            onLoad={handleLoad}
-            onError={handleError}
-            {...props}
-          />
-        </picture>
+        <img
+          src={sources.original}
+          alt={alt}
+          width={width}
+          height={height}
+          loading={priority ? 'eager' : 'lazy'}
+          decoding="async"
+          className={cn(
+            "transition-opacity duration-300",
+            isLoaded ? "opacity-100" : "opacity-0",
+            hasError && "hidden",
+            className
+          )}
+          onLoad={handleLoad}
+          onError={handleError}
+          {...props}
+        />
       )}
 
       {/* Error fallback */}
