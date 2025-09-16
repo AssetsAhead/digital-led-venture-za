@@ -58,10 +58,10 @@ export default {
 					foreground: 'hsl(var(--card-foreground))'
 				},
 				led: {
-					purple: '#8B5CF6',
-					blue: '#0FA0CE',
-					pink: '#EC4899',
-					electric: '#3B82F6',
+					purple: 'hsl(var(--led-purple))',
+					blue: 'hsl(var(--led-blue))',
+					pink: 'hsl(var(--led-pink))',
+					electric: 'hsl(var(--led-electric))',
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',

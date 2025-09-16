@@ -3,6 +3,7 @@ import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { OptimizedImage } from '@/components/ui/optimized-image';
 
 const GallerySection = () => {
   return (
@@ -24,25 +25,31 @@ const GallerySection = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <Card className="overflow-hidden border-0 rounded-lg neon-border">
-            <img 
+            <OptimizedImage 
               src="/lovable-uploads/f8becb11-4814-46d3-93eb-bd1fc1ad6501.png" 
-              alt="LED Backpack Side View" 
+              alt="LED Backpack Side View - Programmable display technology" 
+              width={400}
+              height={400}
               className="w-full h-auto object-cover aspect-square"
             />
           </Card>
           
           <Card className="overflow-hidden border-0 rounded-lg neon-border">
-            <img 
+            <OptimizedImage 
               src="/lovable-uploads/4ead3332-c7e7-4aa8-a503-3110e0724ae7.png" 
-              alt="LED Backpack Interior View" 
+              alt="LED Backpack Interior View - Smart storage compartments" 
+              width={400}
+              height={400}
               className="w-full h-auto object-cover aspect-square"
             />
           </Card>
           
           <Card className="overflow-hidden border-0 rounded-lg neon-border">
-            <img 
+            <OptimizedImage 
               src="/lovable-uploads/dc7e2e62-8fd6-4359-ab6a-3f9f613ad2af.png" 
-              alt="LED Backpack QR Code Display" 
+              alt="LED Backpack QR Code Display - Interactive features" 
+              width={400}
+              height={400}
               className="w-full h-auto object-cover aspect-square"
             />
           </Card>
@@ -52,9 +59,11 @@ const GallerySection = () => {
           <h3 className="text-2xl font-bold mb-8 text-center">Learn More</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <Card className="overflow-hidden border-0 rounded-lg neon-border">
-              <img 
+              <OptimizedImage 
                 src="/lovable-uploads/c2da4963-540f-4a28-8909-2da1606ea9ba.png" 
-                alt="High Quality Waterproof Motorcycle Backpack" 
+                alt="High Quality Waterproof Motorcycle Backpack with LED display" 
+                width={300}
+                height={300}
                 className="w-full h-auto object-cover aspect-square"
               />
               <div className="p-4 bg-card/80 backdrop-blur-sm">
@@ -64,9 +73,11 @@ const GallerySection = () => {
             </Card>
             
             <Card className="overflow-hidden border-0 rounded-lg neon-border">
-              <img 
+              <OptimizedImage 
                 src="/lovable-uploads/e3a5110c-6ee0-40b5-8380-3739717cea5c.png" 
-                alt="Bluetooth Connection APP Control" 
+                alt="Bluetooth Connection APP Control for LED backpack" 
+                width={300}
+                height={300}
                 className="w-full h-auto object-cover aspect-square"
               />
               <div className="p-4 bg-card/80 backdrop-blur-sm">
@@ -76,9 +87,11 @@ const GallerySection = () => {
             </Card>
             
             <Card className="overflow-hidden border-0 rounded-lg neon-border">
-              <img 
+              <OptimizedImage 
                 src="/lovable-uploads/77242f7e-78a0-420d-94ea-64da1ff67ac3.png" 
-                alt="Comfortable & Functional Backpack" 
+                alt="Comfortable & Functional LED Backpack design" 
+                width={300}
+                height={300}
                 className="w-full h-auto object-cover aspect-square"
               />
               <div className="p-4 bg-card/80 backdrop-blur-sm">
@@ -88,9 +101,11 @@ const GallerySection = () => {
             </Card>
             
             <Card className="overflow-hidden border-0 rounded-lg neon-border">
-              <img 
+              <OptimizedImage 
                 src="/lovable-uploads/d3f22349-5d40-42c2-93e8-2fe41f20cbf7.png" 
-                alt="Multi Storage Compartment" 
+                alt="Multi Storage Compartment LED backpack organization" 
+                width={300}
+                height={300}
                 className="w-full h-auto object-cover aspect-square"
               />
               <div className="p-4 bg-card/80 backdrop-blur-sm">
@@ -103,9 +118,11 @@ const GallerySection = () => {
         
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           <Card className="overflow-hidden border-0 rounded-lg neon-border">
-            <img 
+            <OptimizedImage 
               src="/lovable-uploads/2a1e85b0-8d71-4f8e-9546-4dc39b180adb.png" 
-              alt="Waterproof Material" 
+              alt="Waterproof Material - High-density nylon fabric LED backpack" 
+              width={500}
+              height={300}
               className="w-full h-auto object-cover"
             />
           </Card>

@@ -22,6 +22,12 @@
     --secondary: 192 100% 43%;
     --secondary-foreground: 0 0% 100%;
 
+    /* LED Colors as HSL semantic tokens */
+    --led-purple: 260 84% 63%;
+    --led-blue: 192 100% 43%;
+    --led-pink: 335 78% 57%;
+    --led-electric: 217 91% 60%;
+
     --muted: 240 5% 25%;
     --muted-foreground: 240 5% 65%;
 

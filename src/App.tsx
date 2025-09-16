@@ -11,12 +11,14 @@ import Presentation from "./pages/Presentation";
 import ReturnPolicy from "./pages/ReturnPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import NotFound from "./pages/NotFound";
+import Analytics from "./components/Analytics";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
+      <Analytics />
       <Toaster />
       <Sonner />
       <BrowserRouter>

@@ -2,6 +2,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Sparkles, TrendingUp } from 'lucide-react';
+import { OptimizedImage } from '@/components/ui/optimized-image';
 
 const HeroSection = () => {
   return (
@@ -54,16 +55,22 @@ const HeroSection = () => {
             <div className="relative">
               <div className="grid grid-cols-1 gap-6 max-w-sm">
                 <div className="animate-float">
-                  <img
+                  <OptimizedImage
                     src="/lovable-uploads/72778d36-88d3-4ab2-afb7-5c07ddc172c4.png"
-                    alt="LED Business Solutions"
+                    alt="LED Business Solutions - Innovative technology for business growth"
+                    width={400}
+                    height={400}
+                    priority={true}
                     className="relative z-10 drop-shadow-2xl rounded-lg w-full"
                   />
                 </div>
                 <div className="animate-float animation-delay-300">
-                  <img
+                  <OptimizedImage
                     src="/lovable-uploads/dc7e2e62-8fd6-4359-ab6a-3f9f613ad2af.png"
-                    alt="Digital Innovation"
+                    alt="Digital Innovation - Advanced LED backpack technology"
+                    width={400}
+                    height={400}
+                    priority={true}
                     className="relative z-10 drop-shadow-2xl rounded-lg w-full"
                   />
                 </div>
