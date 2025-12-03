@@ -16,11 +16,25 @@ interface FormData {
   specialInstructions: string;
 }
 
+export interface InvoiceData {
+  orderNumber: string;
+  date: string;
+  customerName: string;
+  email: string;
+  phone: string;
+  address: string;
+  quantity: number;
+  unitPrice: number;
+  totalAmount: number;
+  paymentReference?: string;
+}
+
 export const useYocoPayment = () => {
   const { toast } = useToast();
   const [yoco, setYoco] = useState<any>(null);
   const [sdkLoaded, setSdkLoaded] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [invoiceData, setInvoiceData] = useState<InvoiceData | null>(null);
 
   // Your actual Yoco public key
   const YOCO_PUBLIC_KEY = 'pk_live_a314c90fEPqmy4n30ed4';
@@ -148,6 +162,25 @@ export const useYocoPayment = () => {
             const { leadId, orderId } = response.data;
             console.log('Order processed successfully:', { leadId, orderId });
             
+            // Set invoice data for display
+            const unitPrice = formData.quantity >= 10 ? 2200 : 2520;
+            setInvoiceData({
+              orderNumber: orderId || `ORD-${Date.now()}`,
+              date: new Date().toLocaleDateString('en-ZA', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              }),
+              customerName: `${formData.firstName} ${formData.lastName}`,
+              email: formData.email,
+              phone: formData.phone,
+              address: `${formData.address}, ${formData.city}, ${formData.province}, ${formData.postalCode}`,
+              quantity: formData.quantity,
+              unitPrice: unitPrice,
+              totalAmount: totalAmount,
+              paymentReference: result.id || `YOC_${Date.now()}`
+            });
+            
             toast({
               title: "Order Confirmed!",
               description: `Order ${orderId} has been received and confirmed. You'll receive updates via email and WhatsApp.`,
@@ -184,9 +217,13 @@ export const useYocoPayment = () => {
     }
   };
 
+  const clearInvoice = () => setInvoiceData(null);
+
   return {
     sdkLoaded,
     isProcessing,
-    processPayment
+    processPayment,
+    invoiceData,
+    clearInvoice
   };
 };
