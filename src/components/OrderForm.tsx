@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,10 +7,11 @@ import { useYocoPayment } from '@/hooks/useYocoPayment';
 import ProductSummary from './ProductSummary';
 import CustomerInfoForm from './CustomerInfoForm';
 import ShippingAddressForm from './ShippingAddressForm';
+import Invoice from './Invoice';
 
 const OrderForm = () => {
   const { toast } = useToast();
-  const { sdkLoaded, isProcessing, processPayment } = useYocoPayment();
+  const { sdkLoaded, isProcessing, processPayment, invoiceData, clearInvoice } = useYocoPayment();
   
   const [formData, setFormData] = useState({
     firstName: '',
@@ -28,8 +28,8 @@ const OrderForm = () => {
 
   // Pricing
   const [testMode, setTestMode] = useState(false);
-  const basePrice = testMode ? 5 : 2520; // R5.00 for testing, R2520 for production (R2400 + R120 shipping)
-  const bulkDiscountPrice = testMode ? 5 : 2200; // Same test price for bulk (R2400 - R200 bulk discount)
+  const basePrice = testMode ? 5 : 2520;
+  const bulkDiscountPrice = testMode ? 5 : 2200;
   const pricePerUnit = formData.quantity >= 10 ? bulkDiscountPrice : basePrice;
   const totalAmount = pricePerUnit * formData.quantity;
   const savings = formData.quantity >= 10 ? (basePrice - bulkDiscountPrice) * formData.quantity : 0;
@@ -44,7 +44,7 @@ const OrderForm = () => {
 
   const validateForm = () => {
     const required = ['firstName', 'lastName', 'email', 'phone', 'address', 'city', 'province', 'postalCode'];
-    return required.every(field => formData[field].trim() !== '');
+    return required.every(field => formData[field as keyof typeof formData].toString().trim() !== '');
   };
 
   const handleYocoCheckout = async (e: React.FormEvent) => {
@@ -76,6 +76,19 @@ const OrderForm = () => {
 
     await processPayment(formData, totalAmount, resetForm);
   };
+
+  const handleCloseInvoice = () => {
+    clearInvoice();
+  };
+
+  // Show invoice if payment was successful
+  if (invoiceData) {
+    return (
+      <div className="max-w-2xl mx-auto p-6">
+        <Invoice data={invoiceData} onClose={handleCloseInvoice} />
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-2xl mx-auto p-6">
