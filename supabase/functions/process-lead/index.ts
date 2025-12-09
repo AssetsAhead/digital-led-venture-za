@@ -11,6 +11,22 @@ const supabase = createClient(
   Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
 );
 
+// Input validation helpers
+const isValidEmail = (email: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email) && email.length <= 255;
+};
+
+const isValidPhone = (phone: string): boolean => {
+  const phoneRegex = /^[\d\s\-\+\(\)]{7,20}$/;
+  return phoneRegex.test(phone);
+};
+
+const sanitizeString = (str: string, maxLength: number): string => {
+  if (typeof str !== 'string') return '';
+  return str.trim().slice(0, maxLength);
+};
+
 interface LeadData {
   firstName: string;
   lastName: string;
@@ -18,7 +34,6 @@ interface LeadData {
   phone?: string;
   message?: string;
   source?: string;
-  zapierWebhookUrl?: string;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -27,8 +42,49 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const leadData: LeadData = await req.json();
-    console.log('Processing lead:', leadData);
+    const rawData = await req.json();
+    console.log('Processing lead request');
+
+    // Validate required fields
+    if (!rawData.firstName || typeof rawData.firstName !== 'string') {
+      return new Response(
+        JSON.stringify({ error: 'First name is required' }),
+        { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      );
+    }
+
+    if (!rawData.lastName || typeof rawData.lastName !== 'string') {
+      return new Response(
+        JSON.stringify({ error: 'Last name is required' }),
+        { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      );
+    }
+
+    if (!rawData.email || !isValidEmail(rawData.email)) {
+      return new Response(
+        JSON.stringify({ error: 'Valid email is required' }),
+        { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      );
+    }
+
+    if (rawData.phone && !isValidPhone(rawData.phone)) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid phone number format' }),
+        { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      );
+    }
+
+    // Sanitize and validate input
+    const leadData: LeadData = {
+      firstName: sanitizeString(rawData.firstName, 100),
+      lastName: sanitizeString(rawData.lastName, 100),
+      email: sanitizeString(rawData.email, 255).toLowerCase(),
+      phone: rawData.phone ? sanitizeString(rawData.phone, 20) : undefined,
+      message: rawData.message ? sanitizeString(rawData.message, 1000) : undefined,
+      source: rawData.source ? sanitizeString(rawData.source, 50) : 'website',
+    };
+
+    console.log('Validated lead data for:', leadData.email);
 
     // Insert lead into database
     const { data: lead, error: leadError } = await supabase
@@ -39,8 +95,7 @@ const handler = async (req: Request): Promise<Response> => {
         email: leadData.email,
         phone: leadData.phone,
         message: leadData.message,
-        source: leadData.source || 'website',
-        zapier_webhook_url: leadData.zapierWebhookUrl
+        source: leadData.source,
       })
       .select()
       .single();
@@ -52,30 +107,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log('Lead created:', lead.id);
 
-    // Trigger Zapier webhook if provided
-    if (leadData.zapierWebhookUrl) {
-      try {
-        const zapierResponse = await fetch(leadData.zapierWebhookUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            lead_id: lead.id,
-            name: `${leadData.firstName} ${leadData.lastName}`,
-            email: leadData.email,
-            phone: leadData.phone,
-            message: leadData.message,
-            timestamp: new Date().toISOString(),
-            source: leadData.source || 'website'
-          })
-        });
-        console.log('Zapier webhook triggered:', zapierResponse.status);
-      } catch (zapierError) {
-        console.error('Zapier webhook failed:', zapierError);
-        // Don't fail the entire process if Zapier fails
-      }
-    }
-
-    // Trigger email automation
+    // Trigger email automation (internal call with service role)
     try {
       const emailResponse = await supabase.functions.invoke('send-email-sequence', {
         body: { leadId: lead.id, emailType: 'welcome' }
@@ -85,7 +117,7 @@ const handler = async (req: Request): Promise<Response> => {
       console.error('Email automation failed:', emailError);
     }
 
-    // Trigger WhatsApp sequence
+    // Trigger WhatsApp sequence (internal call with service role)
     if (leadData.phone) {
       try {
         const whatsappResponse = await supabase.functions.invoke('send-whatsapp-sequence', {
@@ -101,7 +133,7 @@ const handler = async (req: Request): Promise<Response> => {
       JSON.stringify({ 
         success: true, 
         leadId: lead.id,
-        message: 'Lead processed and sequences initiated' 
+        message: 'Lead processed successfully' 
       }),
       {
         status: 200,
@@ -112,7 +144,7 @@ const handler = async (req: Request): Promise<Response> => {
   } catch (error: any) {
     console.error('Error in process-lead function:', error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: 'An error occurred processing your request' }),
       {
         status: 500,
         headers: { 'Content-Type': 'application/json', ...corsHeaders },

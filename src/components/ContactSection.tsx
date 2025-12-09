@@ -9,6 +9,18 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 
+// Input validation helpers
+const isValidEmail = (email: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email) && email.length <= 255;
+};
+
+const isValidPhone = (phone: string): boolean => {
+  if (!phone) return true; // Phone is optional
+  const phoneRegex = /^[\d\s\-\+\(\)]{7,20}$/;
+  return phoneRegex.test(phone);
+};
+
 const ContactSection = () => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
@@ -17,7 +29,6 @@ const ContactSection = () => {
     email: '',
     phone: '',
     message: '',
-    zapierWebhookUrl: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -29,7 +40,8 @@ const ContactSection = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.firstName || !formData.lastName || !formData.email) {
+    // Client-side validation
+    if (!formData.firstName.trim() || !formData.lastName.trim() || !formData.email.trim()) {
       toast({
         title: "Missing Information",
         description: "Please fill in all required fields.",
@@ -38,11 +50,37 @@ const ContactSection = () => {
       return;
     }
 
+    if (!isValidEmail(formData.email)) {
+      toast({
+        title: "Invalid Email",
+        description: "Please enter a valid email address.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (formData.phone && !isValidPhone(formData.phone)) {
+      toast({
+        title: "Invalid Phone",
+        description: "Please enter a valid phone number.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
+      // Only send validated, sanitized data
       const response = await supabase.functions.invoke('process-lead', {
-        body: formData
+        body: {
+          firstName: formData.firstName.trim().slice(0, 100),
+          lastName: formData.lastName.trim().slice(0, 100),
+          email: formData.email.trim().slice(0, 255).toLowerCase(),
+          phone: formData.phone ? formData.phone.trim().slice(0, 20) : undefined,
+          message: formData.message ? formData.message.trim().slice(0, 1000) : undefined,
+          source: 'website',
+        }
       });
 
       if (response.error) {
@@ -61,11 +99,10 @@ const ContactSection = () => {
         email: '',
         phone: '',
         message: '',
-        zapierWebhookUrl: ''
       });
 
     } catch (error) {
-      console.error('Form submission error:', error);
+      console.error('Form submission error');
       toast({
         title: "Error",
         description: "Something went wrong. Please try again or contact us directly.",
@@ -109,6 +146,7 @@ const ContactSection = () => {
                       className="bg-input"
                       value={formData.firstName}
                       onChange={handleInputChange}
+                      maxLength={100}
                       required
                     />
                   </div>
@@ -121,6 +159,7 @@ const ContactSection = () => {
                       className="bg-input"
                       value={formData.lastName}
                       onChange={handleInputChange}
+                      maxLength={100}
                       required
                     />
                   </div>
@@ -136,6 +175,7 @@ const ContactSection = () => {
                     className="bg-input"
                     value={formData.email}
                     onChange={handleInputChange}
+                    maxLength={255}
                     required
                   />
                 </div>
@@ -150,6 +190,7 @@ const ContactSection = () => {
                     className="bg-input"
                     value={formData.phone}
                     onChange={handleInputChange}
+                    maxLength={20}
                   />
                 </div>
                 
@@ -163,23 +204,8 @@ const ContactSection = () => {
                     rows={4}
                     value={formData.message}
                     onChange={handleInputChange}
+                    maxLength={1000}
                   />
-                </div>
-
-                <div>
-                  <Label htmlFor="zapierWebhookUrl">Zapier Webhook URL (Optional)</Label>
-                  <Input
-                    id="zapierWebhookUrl"
-                    name="zapierWebhookUrl"
-                    type="url"
-                    placeholder="https://hooks.zapier.com/hooks/catch/..."
-                    className="bg-input"
-                    value={formData.zapierWebhookUrl}
-                    onChange={handleInputChange}
-                  />
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Connect your Zapier automation to receive lead notifications
-                  </p>
                 </div>
                 
                 <Button 

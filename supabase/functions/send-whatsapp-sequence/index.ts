@@ -11,6 +11,12 @@ const supabase = createClient(
   Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
 );
 
+// Validate UUID format
+const isValidUUID = (str: string): boolean => {
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  return uuidRegex.test(str);
+};
+
 const whatsappTemplates = {
   welcome: (name: string) => `🎉 Welcome to AssetsAhead, ${name}!
 
@@ -69,7 +75,7 @@ This is our biggest discount of the year!
 
 ⏰ Offer expires in 48 hours
 💬 Reply CLAIM30 to secure your discount
-📞 Or call us immediately at [Your Phone]
+📞 Or call us immediately at +27 67 874 6540
 
 Don't miss out - this offer won't last long! 🏃‍♂️💨`
 };
@@ -85,7 +91,44 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { leadId, messageType }: WhatsAppRequest = await req.json();
+    // Verify authorization - this function should only be called internally
+    const authHeader = req.headers.get('authorization');
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      console.error('Missing or invalid authorization header');
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized' }),
+        { status: 401, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      );
+    }
+
+    const rawData = await req.json();
+    console.log('Received WhatsApp sequence request');
+
+    // Validate input
+    if (!rawData.leadId || typeof rawData.leadId !== 'string' || !isValidUUID(rawData.leadId)) {
+      return new Response(
+        JSON.stringify({ error: 'Valid lead ID is required' }),
+        { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      );
+    }
+
+    if (!rawData.messageType || typeof rawData.messageType !== 'string') {
+      return new Response(
+        JSON.stringify({ error: 'Message type is required' }),
+        { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      );
+    }
+
+    // Validate message type
+    const validTypes = Object.keys(whatsappTemplates);
+    if (!validTypes.includes(rawData.messageType)) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid message type' }),
+        { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      );
+    }
+
+    const { leadId, messageType }: WhatsAppRequest = rawData;
     console.log(`Sending ${messageType} WhatsApp message for lead ${leadId}`);
 
     // Get lead data
@@ -96,17 +139,21 @@ const handler = async (req: Request): Promise<Response> => {
       .single();
 
     if (leadError || !lead) {
-      throw new Error('Lead not found');
+      console.error('Lead not found:', leadError);
+      return new Response(
+        JSON.stringify({ error: 'Lead not found' }),
+        { status: 404, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      );
     }
 
     if (!lead.phone) {
-      throw new Error('No phone number available for lead');
+      return new Response(
+        JSON.stringify({ error: 'No phone number available for lead' }),
+        { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      );
     }
 
     const template = whatsappTemplates[messageType];
-    if (!template) {
-      throw new Error('WhatsApp template not found');
-    }
 
     // Clean and format phone number
     let cleanPhone = lead.phone.replace(/\D/g, '');
@@ -116,7 +163,7 @@ const handler = async (req: Request): Promise<Response> => {
       cleanPhone = '27' + cleanPhone;
     }
 
-    const message = template(lead.first_name);
+    const message = template(lead.first_name || 'there');
 
     // Send WhatsApp message via Twilio
     const twilioAccountSid = Deno.env.get('TWILIO_ACCOUNT_SID');
@@ -145,7 +192,8 @@ const handler = async (req: Request): Promise<Response> => {
 
     if (!twilioResponse.ok) {
       const errorText = await twilioResponse.text();
-      throw new Error(`Twilio API error: ${errorText}`);
+      console.error('Twilio API error:', errorText);
+      throw new Error(`Twilio API error: ${twilioResponse.status}`);
     }
 
     const twilioData = await twilioResponse.json();
@@ -182,7 +230,7 @@ const handler = async (req: Request): Promise<Response> => {
   } catch (error: any) {
     console.error('Error in send-whatsapp-sequence function:', error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: 'Failed to send WhatsApp message' }),
       {
         status: 500,
         headers: { 'Content-Type': 'application/json', ...corsHeaders },

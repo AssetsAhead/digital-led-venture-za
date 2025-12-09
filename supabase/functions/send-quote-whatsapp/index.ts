@@ -5,6 +5,22 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Input validation helpers
+const isValidEmail = (email: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email) && email.length <= 255;
+};
+
+const isValidPhone = (phone: string): boolean => {
+  const phoneRegex = /^[\d\s\-\+\(\)]{7,20}$/;
+  return phoneRegex.test(phone);
+};
+
+const sanitizeString = (str: string, maxLength: number): string => {
+  if (typeof str !== 'string') return '';
+  return str.trim().slice(0, maxLength);
+};
+
 interface QuoteData {
   companyName: string;
   contactPerson: string;
@@ -17,14 +33,63 @@ interface QuoteData {
 }
 
 const handler = async (req: Request): Promise<Response> => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const quoteData: QuoteData = await req.json();
-    console.log('Received quote request:', quoteData);
+    const rawData = await req.json();
+    console.log('Received quote request');
+
+    // Validate required fields
+    if (!rawData.companyName || typeof rawData.companyName !== 'string') {
+      return new Response(
+        JSON.stringify({ error: 'Company name is required' }),
+        { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      );
+    }
+
+    if (!rawData.contactPerson || typeof rawData.contactPerson !== 'string') {
+      return new Response(
+        JSON.stringify({ error: 'Contact person is required' }),
+        { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      );
+    }
+
+    if (!rawData.email || !isValidEmail(rawData.email)) {
+      return new Response(
+        JSON.stringify({ error: 'Valid email is required' }),
+        { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      );
+    }
+
+    if (!rawData.phone || !isValidPhone(rawData.phone)) {
+      return new Response(
+        JSON.stringify({ error: 'Valid phone number is required' }),
+        { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      );
+    }
+
+    if (typeof rawData.quantity !== 'number' || rawData.quantity < 10 || rawData.quantity > 10000) {
+      return new Response(
+        JSON.stringify({ error: 'Valid quantity is required (10-10000)' }),
+        { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      );
+    }
+
+    // Sanitize input
+    const quoteData: QuoteData = {
+      companyName: sanitizeString(rawData.companyName, 200),
+      contactPerson: sanitizeString(rawData.contactPerson, 100),
+      email: sanitizeString(rawData.email, 255).toLowerCase(),
+      phone: sanitizeString(rawData.phone, 20),
+      quantity: Math.floor(rawData.quantity),
+      requirements: sanitizeString(rawData.requirements || '', 500),
+      useCase: sanitizeString(rawData.useCase || '', 200),
+      estimatedTotal: typeof rawData.estimatedTotal === 'number' ? Math.floor(rawData.estimatedTotal) : 0,
+    };
+
+    console.log('Validated quote request for:', quoteData.email);
 
     const accountSid = Deno.env.get('TWILIO_ACCOUNT_SID');
     const authToken = Deno.env.get('TWILIO_AUTH_TOKEN');
@@ -86,7 +151,7 @@ Respond within 24 hours! 💼`;
   } catch (error: any) {
     console.error('Error sending quote WhatsApp notification:', error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: 'Failed to process quote request' }),
       {
         status: 500,
         headers: { 'Content-Type': 'application/json', ...corsHeaders },
