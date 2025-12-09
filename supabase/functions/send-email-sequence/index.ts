@@ -14,6 +14,12 @@ const supabase = createClient(
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
+// Validate UUID format
+const isValidUUID = (str: string): boolean => {
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  return uuidRegex.test(str);
+};
+
 const emailTemplates = {
   welcome: {
     subject: "Welcome to AssetsAhead - Your Growth Journey Starts Now!",
@@ -163,7 +169,44 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { leadId, emailType }: EmailRequest = await req.json();
+    // Verify authorization - this function should only be called internally
+    const authHeader = req.headers.get('authorization');
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      console.error('Missing or invalid authorization header');
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized' }),
+        { status: 401, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      );
+    }
+
+    const rawData = await req.json();
+    console.log('Received email sequence request');
+
+    // Validate input
+    if (!rawData.leadId || typeof rawData.leadId !== 'string' || !isValidUUID(rawData.leadId)) {
+      return new Response(
+        JSON.stringify({ error: 'Valid lead ID is required' }),
+        { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      );
+    }
+
+    if (!rawData.emailType || typeof rawData.emailType !== 'string') {
+      return new Response(
+        JSON.stringify({ error: 'Email type is required' }),
+        { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      );
+    }
+
+    // Validate email type
+    const validTypes = Object.keys(emailTemplates);
+    if (!validTypes.includes(rawData.emailType)) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid email type' }),
+        { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      );
+    }
+
+    const { leadId, emailType }: EmailRequest = rawData;
     console.log(`Sending ${emailType} email for lead ${leadId}`);
 
     // Get lead data
@@ -174,20 +217,21 @@ const handler = async (req: Request): Promise<Response> => {
       .single();
 
     if (leadError || !lead) {
-      throw new Error('Lead not found');
+      console.error('Lead not found:', leadError);
+      return new Response(
+        JSON.stringify({ error: 'Lead not found' }),
+        { status: 404, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      );
     }
 
     const template = emailTemplates[emailType];
-    if (!template) {
-      throw new Error('Email template not found');
-    }
 
     // Send email
     const emailResponse = await resend.emails.send({
       from: 'AssetsAhead <noreply@assetsahead.com>',
       to: [lead.email],
       subject: template.subject,
-      html: template.html(lead.first_name),
+      html: template.html(lead.first_name || 'there'),
     });
 
     if (emailResponse.error) {
@@ -226,7 +270,7 @@ const handler = async (req: Request): Promise<Response> => {
   } catch (error: any) {
     console.error('Error in send-email-sequence function:', error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: 'Failed to send email' }),
       {
         status: 500,
         headers: { 'Content-Type': 'application/json', ...corsHeaders },
