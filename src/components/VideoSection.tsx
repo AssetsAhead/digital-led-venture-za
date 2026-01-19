@@ -3,8 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
 const VideoSection = () => {
-  // Replace with your actual YouTube video ID
-  const youtubeVideoId = "dQw4w9WgXcQ"; // Placeholder - update with your video ID
+  const youtubeVideoId = "Gu2WMTMfYqE";
 
   return (
     <section id="video" className="py-16 relative">
