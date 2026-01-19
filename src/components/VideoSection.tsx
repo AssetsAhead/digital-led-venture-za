@@ -50,7 +50,7 @@ const VideoSection = () => {
               <iframe
                 src={`https://www.youtube.com/embed/${youtubeVideoId}?rel=0&modestbranding=1&autoplay=1`}
                 title="LED Backpack Demo"
-                className="w-full h-full"
+                className="w-full h-full animate-fade-in"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />
